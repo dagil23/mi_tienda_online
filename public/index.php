@@ -13,24 +13,16 @@ include '../config/database.php';
     <title>Pagina Principal</title>
 </head>
 <body>
-   <header>
-    <h1>Walk in Wonder </h1>
+<header>
+    <h1>Clarity</h1>
     <header>
-           <nav>
-               <ul>
-                   <li>Home</li>
-                   <li>Carrito</li>
-                   <li>Login</li>
-                   <li>Registro</li>
-                   <li>Checkout</li>
-               </ul>
-           </nav>
-           <main>
+
+        <main>
                 <section>
 
 
                 </section>
-           </main>
+        </main>
         <footer>
 
         </footer>

@@ -7,6 +7,19 @@
 body{
     background-color: var(--primaryColor);
 }
-h1{
+h1,h2{
     font-family: var(--titlesLetters);
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    width: 200px;
+    height: auto;
+}
+button{
+    width: 100px;
+    height: auto;
+    margin-top: 1em;
 }
