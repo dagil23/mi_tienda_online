@@ -8,11 +8,8 @@ include_once '../config/database.php';
         $userValidation->execute();
         $userValidation->store_result();
 
-            if($userValidation->num_rows > 0){
-                return true;
-            }else{
-                return false;
-            }
+        $status = ($userValidation->num_rows > 0) ? true : false;
+        return $status;
     }
 
     function isAdmin($email){
@@ -24,11 +21,10 @@ include_once '../config/database.php';
         $adminValidation->execute();
         $adminValidation->store_result();
 
-            if($adminValidation->num_rows > 0){
-                return true;
-            }else{
-                return false;
-            }
-
+        $status = ($adminValidation->num_rows > 0) ? true : false;
+        return $status;
+            
     }
-?>
+
+   
+

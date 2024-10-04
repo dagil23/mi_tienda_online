@@ -3,12 +3,13 @@ include '../config/database.php';
 include '../includes/funciones.php';
 session_start();
 if(isset($_SESSION['email'])){
-
-    if(isAdmin($_SESSION['email'])== false){
+    $email = $_SESSION['email'];
+    if(isAdmin($email)){
+        echo "Tu email es $email y eres admin";
+    }else {
         header("Location: ../public/index.php");
-    }else{
-        echo "Eres admin";
     }
+  
 }
     
 ?>
@@ -21,6 +22,14 @@ if(isset($_SESSION['email'])){
     <title>Zona Admin</title>
 </head>
 <body>
-    <h1>Hola admin<h1>
+    <header>
+        <h1>Zona Admin<h1>
+            <nav>
+                <ul>
+                    <li><a href="../admin/productos.php">Productos</a></li>
+                    <li><a href="../admin/categorias.php">Categorias</a></li>
+                </ul>
+            </nav>
+        </header>
 </body>
 </html>

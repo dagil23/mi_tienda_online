@@ -1,6 +1,21 @@
 <?php
 include '../config/database.php';
+include '../includes/funciones.php';
+session_start();
 
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+        if(isset($_POST["usuario"]) && isset($_POST["apellido"]) && isset($_POST["email"]) && isset($_POST["direccion"]) && isset($_POST["telefono"]) && isset($_POST["dni"]) && isset($_POST["password"])){
+
+            $email = $_POST["email"];
+            $password = $_POST["password"];
+            $usuario = $_POST["nombre"];
+            $apellido = $_POST["apellido"];
+            $direccion = $_POST["direccion"];
+            $telefono = $_POST["telefono"];
+            $dni = $_POST["dni"];
+    }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -29,19 +44,21 @@ include '../config/database.php';
         <section>
             <fieldset>
         <h2>Crear Cuenta</h2>
-                <form action="">
+                <form action="" method="post">
                     <label for="name">Nombre</label>
-                    <input type="text" name="usuario" id="name">
+                    <input type="text" name="usuario" id="name" required>
                     <label for="apellido">Apellido</label>
-                    <input type="text" name="apellido" id="name">
+                    <input type="text" name="apellido" id="name" required>
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email">
+                    <input type="email" name="email" id="email" required>
                     <label for="password">Contraseña</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                     <label for="direccion">Direccion</label>
-                    <input type="text" name="direccion" id="direccion">
+                    <input type="text" name="direccion" id="direccion" required>
                     <label for="telefono">Numero</label>
-                    <input type="tel" name="telefono" id="telefono">
+                    <input type="tel" name="telefono" id="telefono" required>
+                    <label for="dni">DNI</label>
+                    <input type="text" name="dni" id="dni" required>
                     <button type="submit">Crear Cuenta</button>
                     <button><a href="../public/login.php">Iniciar Sesion</a></button>
                 </form>

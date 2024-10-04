@@ -1,21 +1,17 @@
 <?php
 include '../config/database.php';
 include '../includes/funciones.php';
-$message = array();
 session_start();
-    if($_SERVER['REQUEST_METHOD'] == "POST"){
+$message = "";
+if($_SERVER['REQUEST_METHOD'] == "POST"){
         if (verifyUser($_POST["email"],$_POST["password"])){
-            if(isAdmin($_POST["email"])){
-                $_SESSION["email"] = $_POST["email"];
-                header("Location: ../admin/index.php");
-            }else{
-                $message = "<p>Bienvenido<p>";
-            }
-        }{
-            $message = "<p>Usuario o Contraseña incorrecto<p>";
+            $_SESSION['email'] = $_POST['email'];
+            header("Location: ../public/index.php");
+        }else{
+            $message = "<p>Usuario o contraseña incorrecto</p>";
+        }
     }
-}
-
+    
 ?>
 
 <!DOCTYPE html>
@@ -42,9 +38,9 @@ session_start();
         <h2>Inicio de Sesión</h2>
                 <form action="" method="post">
                     <label for="email">Email</label>
-                    <input type="email" name="email" id="email">
+                    <input type="email" name="email" id="email" required>
                     <label for="password">Contraseña</label>
-                    <input type="password" name="password" id="password">
+                    <input type="password" name="password" id="password" required>
                     <button type="submit">Login</button>
                     <button><a href="../public/registro.php">Crear Cuenta</a></button>
                     <?php echo $message;?>

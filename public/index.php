@@ -1,6 +1,6 @@
 <?php
 include '../config/database.php';
-
+session_start();
 
 ?>
 
@@ -16,7 +16,15 @@ include '../config/database.php';
 <header>
     <h1>Clarity</h1>
     <header>
-
+    <nav>
+        <ul>
+            <li><a href="../admin/index.php">Zona Admin</a></li>
+            <li><a href="../public/carrito.php">Carrito</a></li>
+            <li><a href="../public/wishlist.php">Wishlist</a></li>
+            <li><a href="../public/registro.php">Sing Up</a></li>
+        </ul>
+    </nav>
+    
         <main>
                 <section>
 
