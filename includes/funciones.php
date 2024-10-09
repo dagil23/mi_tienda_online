@@ -9,6 +9,8 @@ include_once '../config/database.php';
         $userValidation->store_result();
 
         $status = ($userValidation->num_rows > 0) ? true : false;
+        $conexion->close();
+        $userValidation->close();
         return $status;
     }
 
@@ -22,9 +24,32 @@ include_once '../config/database.php';
         $adminValidation->store_result();
 
         $status = ($adminValidation->num_rows > 0) ? true : false;
+        $conexion->close();
+        $adminValidation->close();
         return $status;
             
     }
 
-   
-
+    function addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono) {
+        $conexion = connectDB();
+        
+        $query = $conexion->prepare("INSERT INTO USUARIOS(nombre, apellido, email, dni, contraseña, direccion, telefono) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        
+        if (!$query) {
+            die("Error en la preparación de la consulta: " . $conexion->error);
+        }
+        
+        
+        $query->bind_param("sssssss",$usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
+        
+        $mensaje = "";
+        if ($query->execute()) {
+             $mensaje = "Usuario $usuario insertado con éxito";
+        } else {
+            $mensaje = "Error al insertar el usuario: " . $query->error;
+        }
+        return $mensaje;
+        $query->close();
+        $conexion->close();
+    }
+    

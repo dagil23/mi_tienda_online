@@ -2,18 +2,19 @@
 include '../config/database.php';
 include '../includes/funciones.php';
 session_start();
-
+$mensaje = "";
     if($_SERVER['REQUEST_METHOD'] == "POST"){
 
         if(isset($_POST["usuario"]) && isset($_POST["apellido"]) && isset($_POST["email"]) && isset($_POST["direccion"]) && isset($_POST["telefono"]) && isset($_POST["dni"]) && isset($_POST["password"])){
 
             $email = $_POST["email"];
-            $password = $_POST["password"];
-            $usuario = $_POST["nombre"];
+            $pwd = $_POST["password"];
+            $usuario = $_POST["usuario"];
             $apellido = $_POST["apellido"];
             $direccion = $_POST["direccion"];
             $telefono = $_POST["telefono"];
             $dni = $_POST["dni"];
+           $mensaje = addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
     }
     }
 ?>
@@ -61,6 +62,7 @@ session_start();
                     <input type="text" name="dni" id="dni" required>
                     <button type="submit">Crear Cuenta</button>
                     <button><a href="../public/login.php">Iniciar Sesion</a></button>
+                    <?php echo $mensaje;?>
                 </form>
             </fieldset>
         </section>

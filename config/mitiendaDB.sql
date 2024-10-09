@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS;
 CREATE DATABASE IF NOT EXISTS mitiendaDB;
 USE mitiendaDB;
 
@@ -7,11 +8,12 @@ CREATE TABLE IF NOT EXISTS USUARIOS(
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     email VARCHAR(100) UNIQUE KEY,
+    dni VARCHAR(9) UNIQUE KEY,
     fecha_registro DATE DEFAULT CURDATE(),
     contraseña  VARCHAR(100) NOT NULL,
     direccion VARCHAR(255) NOT NULL,
     telefono VARCHAR(100) NOT NULL,
-    rol ENUM("admin", "user") NOT NULL
+    rol ENUM("admin", "user") NOT NULL DEFAULT "user"
     
 
 );
