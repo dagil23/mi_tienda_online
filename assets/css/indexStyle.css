@@ -1,12 +1,16 @@
-:root{
-    --primaryColor: hsl(60, 100%, 75%);
-    --secondaryColor:hsl(60, 56%, 81%);
-    --titlesLetters: "Rozha One", serif;
-}
+@import url(../css/colors-and-fonts.css);
 
 body{
+
     background-color: var(--primaryColor);
 }
 h1{
     font-family: var(--titlesLetters);
+}
+img{
+    width: 400px;
+    height: 400px;
+}
+footer{
+    color: var(--primaryColor);
 }

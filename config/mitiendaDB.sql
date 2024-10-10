@@ -1,4 +1,4 @@
-DROP DATABASE IF EXISTS;
+DROP DATABASE IF EXISTS mitiendaDB;
 CREATE DATABASE IF NOT EXISTS mitiendaDB;
 USE mitiendaDB;
 
@@ -118,11 +118,11 @@ INSERT INTO WISHLIST (id_usuario, nombre) VALUES
 (5, 'Wishlist de Carlos');
 
 INSERT INTO PRODUCTO (id_categoria, precio, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
-(1, 29.99, 'img1.jpg', 'Camiseta de algodón', 'Camiseta Básica', 50),
-(2, 39.99, 'img2.jpg', 'Jeans de corte recto', 'Jeans Clásicos', 30),
-(3, 15.99, 'img3.jpg', 'Gorra de verano', 'Gorra Trendy', 100),
-(4, 49.99, 'img4.jpg', 'Zapatillas deportivas', 'Zapatillas Sport', 20),
-(5, 25.99, 'img5.jpg', 'Bufanda de lana', 'Bufanda Elegante', 60);
+(1, 29.99, 'camiseta-beige.png', 'Camiseta de algodon', 'Camiseta Básica beige', 50),
+(2, 39.99, 'camiseta-negra.png', 'Camiseta de algodon', 'Camiseta Básica negra', 30),
+(3, 15.99, 'gloves-black.png', 'Guantes de invierno', 'Guantes clasicos negros', 100),
+(4, 49.99, 'short-beige.png', 'Short clasico', 'Short beiges', 20),
+(5, 25.99, 'gloves-grey.png', 'Guantes de invierno', 'Guantes clasicos', 60);
 
 INSERT INTO RESEÑAS (id_usuario, calificacion, contenido) VALUES
 (1, '5 estrellas', 'Excelente producto, me encantó.'),

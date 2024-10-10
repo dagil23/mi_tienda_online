@@ -48,8 +48,22 @@ include_once '../config/database.php';
         } else {
             $mensaje = "Error al insertar el usuario: " . $query->error;
         }
-        return $mensaje;
         $query->close();
         $conexion->close();
+        return $mensaje;
+    }
+
+    function showProduct($search_term){
+
+        $conexion = connectDB();
+        $query = $conexion->prepare("SELECT * FROM PRODUCTO WHERE nombre LIKE ? ");
+        $query->bind_param("s", $search_term);
+        if(!$query){
+            
+        }
+       
+        $result = array();
+      
+
     }
     
