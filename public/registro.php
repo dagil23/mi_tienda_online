@@ -7,14 +7,21 @@ $mensaje = "";
 
         if(isset($_POST["usuario"]) && isset($_POST["apellido"]) && isset($_POST["email"]) && isset($_POST["direccion"]) && isset($_POST["telefono"]) && isset($_POST["dni"]) && isset($_POST["password"])){
 
-            $email = $_POST["email"];
+            $email =  $_POST["email"];
             $pwd = $_POST["password"];
             $usuario = $_POST["usuario"];
             $apellido = $_POST["apellido"];
             $direccion = $_POST["direccion"];
             $telefono = $_POST["telefono"];
             $dni = $_POST["dni"];
-           $mensaje = addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
+            if(!verifyDNI($dni)){
+                $mensaje = "Formato de DNI incorrecto";
+            }elseif(!verifyEmail($email)){
+                $mensaje = "Formato de email invalido";
+            }else{
+
+                $mensaje = addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
+            }
     }
     }
 ?>

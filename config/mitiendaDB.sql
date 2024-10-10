@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS PRODUCTO(
     id_producto INTEGER AUTO_INCREMENT PRIMARY KEY,
     id_categoria INTEGER,
     precio DECIMAL(10,2) NOT NULL,
+    color VARCHAR(15) NOT NULL,
     imagen VARCHAR(255),
     descripcion VARCHAR(255) NOT NULL,
     nombre_producto VARCHAR(100) NOT NULL,
@@ -103,12 +104,14 @@ INSERT INTO PEDIDOS (pedido_usuario, dni, precio_total, nombre, apellidos, talla
 (4, '34567890D', 59.99, 'Ana', 'Sánchez', 'XXL', 'enviado', 'Calle Azul 321'),
 (5, '45678901E', 39.99, 'Carlos', 'Ramírez', 'M', 'carrito', 'Avenida del Sol 654');
 
-INSERT INTO CATEGORIA (descripcion, nombre) VALUES
-('Ropa de mujer', 'Mujer'),
-('Ropa de hombre', 'Hombre'),
-('Accesorios', 'Accesorios'),
-('Calzado', 'Calzado'),
-('Complementos', 'Complementos');
+INSERT INTO CATEGORIA (nombre, descripcion) VALUES
+('Camisetas', 'Ropa de vestir para la parte superior del cuerpo, generalmente casual.'),
+('Pantalones', 'Ropa para la parte inferior del cuerpo, generalmente cubriendo ambas piernas.'),
+('Sudaderas', 'Prendas cómodas para el torso, con o sin capucha.'),
+('Shorts', 'Prendas cortas para la parte inferior del cuerpo, ideales para el clima cálido.'),
+('Gorras', 'Accesorios para la cabeza, comúnmente utilizados para el sol o estilo.'),
+('Chaquetas', 'Prendas exteriores que protegen contra el frío o el clima.'),
+('Polos', 'Camisas con cuello y botones, normalmente de algodón.');
 
 INSERT INTO WISHLIST (id_usuario, nombre) VALUES
 (1, 'Wishlist de Daniel'),
@@ -117,12 +120,30 @@ INSERT INTO WISHLIST (id_usuario, nombre) VALUES
 (4, 'Wishlist de Ana'),
 (5, 'Wishlist de Carlos');
 
-INSERT INTO PRODUCTO (id_categoria, precio, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
-(1, 29.99, 'camiseta-beige.png', 'Camiseta de algodon', 'Camiseta Básica beige', 50),
-(2, 39.99, 'camiseta-negra.png', 'Camiseta de algodon', 'Camiseta Básica negra', 30),
-(3, 15.99, 'gloves-black.png', 'Guantes de invierno', 'Guantes clasicos negros', 100),
-(4, 49.99, 'short-beige.png', 'Short clasico', 'Short beiges', 20),
-(5, 25.99, 'gloves-grey.png', 'Guantes de invierno', 'Guantes clasicos', 60);
+
+INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
+(1, 29.99, 'Beige', 'camiseta-beige.png', 'Camiseta de algodón', 'Camiseta Básica Beige', 50),
+(1, 29.99, 'Negro', 'camiseta-negra.png', 'Camiseta de algodón', 'Camiseta Básica Negra', 30),
+(2, 19.99, 'Negro', 'gloves-black.png', 'Guantes de invierno negros', 'Guantes Negros', 100),
+(2, 19.99, 'Marrón', 'gloves-brown.png', 'Guantes de invierno marrones', 'Guantes Marrones', 80),
+(2, 19.99, 'Gris', 'gloves-grey.png', 'Guantes de invierno grises', 'Guantes Grises', 60),
+(3, 34.99, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 40),
+(3, 34.99, 'Beige', 'polo-beige-back.png', 'Polo de algodón beige (vista trasera)', 'Polo Beige Vista Trasera', 40),
+(3, 34.99, 'Negro', 'polo-black.png', 'Polo de algodón negro', 'Polo Negro', 35),
+(3, 34.99, 'Marrón', 'polo-browndark.png', 'Polo marrón oscuro', 'Polo Marrón Oscuro', 25),
+(4, 24.99, 'Beige', 'short-beige-2.png', 'Short clásico beige', 'Short Beige Modelo 2', 20),
+(4, 24.99, 'Beige', 'short-beige.png', 'Short clásico beige', 'Short Beige', 30),
+(4, 24.99, 'Negro', 'short-black-2.png', 'Short clásico negro', 'Short Negro Modelo 2', 15),
+(4, 24.99, 'Negro', 'short-black.png', 'Short clásico negro', 'Short Negro', 25),
+(1, 29.99, 'Negro', 't-shirt-black.png', 'Camiseta básica negra', 'Camiseta Negra', 40),
+(1, 29.99, 'Blanco', 'camiseta-blanca.png', 'Camiseta de algodón', 'Camiseta Básica Blanca', 50),
+(2, 39.99, 'Azul', 'pantalon-azul.png', 'Pantalón vaquero azul', 'Pantalón Azul', 30),
+(3, 25.99, 'Negro', 'sudadera-negra.png', 'Sudadera de algodón', 'Sudadera Negra', 40),
+(4, 19.99, 'Marrón', 'short-marron.png', 'Short casual de algodón', 'Short Marrón', 25),
+(5, 15.99, 'Negro', 'gorra-negra.png', 'Gorra clásica negra', 'Gorra Negra', 60),
+(6, 49.99, 'Verde', 'chaqueta-verde.png', 'Chaqueta casual', 'Chaqueta Verde', 20),
+(7, 29.99, 'Blanco', 'polo-blanco.png', 'Polo blanco de algodón', 'Polo Blanco', 35);
+
 
 INSERT INTO RESEÑAS (id_usuario, calificacion, contenido) VALUES
 (1, '5 estrellas', 'Excelente producto, me encantó.'),
