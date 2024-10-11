@@ -109,8 +109,12 @@ include_once '../config/database.php';
                 die("Error al ejecutar la consulta: " . $stmt->error);
             }
             
-        $conexion->close();
-        $stmt->close();
+            $conexion->close();
+            $stmt->close();
         }
-        
+
+    function viewProducts(){
+
+        $conexion = connectDB();
+    }
     

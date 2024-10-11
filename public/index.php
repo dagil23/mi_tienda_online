@@ -88,6 +88,7 @@ if (isset($_POST["busqueda"]) || isset($_POST["tipo_prenda"]) || isset($_POST["p
             <p>No se encontraron productos con el término de búsqueda</p>
         <?php else: ?>
             <p>Bienvenido a Clarity</p>
+            <img src="../images/camiseta-negra.png" alt="">
         <?php endif; ?>
     </section>
 </main>
