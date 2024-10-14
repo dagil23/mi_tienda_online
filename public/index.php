@@ -27,75 +27,81 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../assets/css/indexStyle.css">
     <title>Página Principal</title>
 </head>
+
 <body>
-<header>
-    <h1>Clarity</h1>
-</header>
+    <header>
+        <h1>Clarity</h1>
+    </header>
 
-<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
-    <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
-    <label for="tipo_prenda">Tipo de Prenda: </label>
-    <select name="tipo_prenda" id="tipo_prenda">
-       <option value="">Todas</option>
-       <?php foreach($categorias as $categoria): ?>
-        <option value="<?= htmlspecialchars($categoria)?>"><?= htmlspecialchars($categoria)?></option>
-        <?php endforeach;?>
-    </select>
+    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+        <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
+        <label for="tipo_prenda">Tipo de Prenda: </label>
+        <select name="tipo_prenda" id="tipo_prenda">
+            <option value="">Todas</option>
+            <?php foreach ($categorias as $categoria): ?>
+                <option value="<?= htmlspecialchars($categoria["nombre"]) ?>"><?= htmlspecialchars($categoria["nombre"]) ?></option>
+            <?php endforeach; ?>
+        </select>
 
-    <label for="color">Color</label>
-    <select name="color" id="color">
-        <option value="">Todos</option>
-        <?php foreach($colores as $color):?>
-            <option value="<?= htmlspecialchars($color) ?>"> <?= htmlspecialchars($color) ?></option>
-            <?php  endforeach;?>
-    </select>
+        <label for="color">Color</label>
+        <select name="color" id="color">
+            <option value="">Todos</option>
+            <?php foreach ($colores as $color): ?>
+                <option value="<?= htmlspecialchars($color) ?>"> <?= htmlspecialchars($color) ?></option>
+            <?php endforeach; ?>
+        </select>
 
-    <label for="precio">Precio minimo</label>
-    <input type="number" step="0.1" name="precio_min" id="precio_min" placeholder="Precio" value="<?= isset($_POST['precio_min']) ? htmlspecialchars($_POST['precio_min']) : '' ?>">
-    <label for="precio">Precio maximo</label>
-    <input type="number" step="0.1" name="precio_max" id="precio_max" placeholder="Precio" value="<?= isset($_POST['precio_max']) ? htmlspecialchars($_POST['precio_max']) : '' ?>">
+        <label for="precio">Precio minimo</label>
+        <input type="number" step="0.1" name="precio_min" id="precio_min" placeholder="Precio" value="<?= isset($_GET['precio_min']) ? htmlspecialchars($_GET['precio_min']) : '' ?>">
+        <label for="precio">Precio maximo</label>
+        <input type="number" step="0.1" name="precio_max" id="precio_max" placeholder="Precio" value="<?= isset($_GET['precio_max']) ? htmlspecialchars($_GET['precio_max']) : '' ?>">
 
-    <button type="submit">Buscar</button>
-</form>
+        <button type="submit">Buscar</button>
+    </form>
 
-<nav>
-    <ul>
-        <li><a href="../admin/index.php">Zona Admin</a></li>
-        <li><a href="../public/carrito.php">Carrito</a></li>
-        <li><a href="../public/wishlist.php">Wishlist</a></li>
-        <li><a href="../public/registro.php">Sign Up</a></li>
-    </ul>
-</nav>
+    <nav>
+        <ul>
+            <li><a href="../admin/index.php">Zona Admin</a></li>
+            <li><a href="../public/carrito.php">Carrito</a></li>
+            <li><a href="../public/wishlist.php">Wishlist</a></li>
+            <li><a href="../public/registro.php">Sign Up</a></li>
+        </ul>
+    </nav>
 
-<main>
-    <section>
-        <?php if ($productos && $productos->num_rows > 0): ?>
-            <?php while ($producto = $productos->fetch_assoc()): ?>
-                <div class='producto'>
-                    <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
-                    <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
-                    <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
-                    <button>Add to Cart</button> 
-                    <button>Add to Wishlist</button> 
-                </div>
-            <?php endwhile; ?>
-        <?php elseif (isset($_GET["busqueda"])): ?>
-            <p>No se encontraron productos con el término de búsqueda</p>
-        <?php else: ?>
-            <p>Bienvenido a Clarity</p>
-            <h2>Productos destacados</h2>
-            <?php echo implode("_", $categorias) ?>
-        <?php endif; ?>
-    </section>
-</main>
+    <main>
+        <section>
+            <?php if ($productos && $productos->num_rows > 0): ?>
+                <?php while ($producto = $productos->fetch_assoc()): ?>
+                    <div class='producto'>
+                        <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
+                        <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
+                        <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
+                        <button>Add to Cart</button>
+                        <button>Add to Wishlist</button>
+                    </div>
+                <?php endwhile; ?>
+            <?php elseif (isset($_GET["busqueda"])): ?>
+                <p>No se encontraron productos con el término de búsqueda</p>
+                <?= var_dump($_GET["busqueda"]) ."<br>" ?>
+                <?= print_r($productos) ?>
 
-<footer>
-</footer>
+
+            <?php else: ?>
+                <p>Bienvenido a Clarity</p>
+                <h2>Productos destacados</h2>
+            <?php endif; ?>
+        </section>
+    </main>
+
+    <footer>
+    </footer>
 </body>
+
 </html>

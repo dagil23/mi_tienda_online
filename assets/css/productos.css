@@ -1,0 +1,20 @@
+@import url(../css/colors-and-fonts.css);
+
+body{
+
+    background-color: var(--primaryColor);
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+input,select{
+    width:200px ;
+}
+button{
+    width: 100px;
+}
+li{
+    color: red;
+    list-style: none;
+}

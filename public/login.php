@@ -22,7 +22,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rozha+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost/Proyecto-DWES/mi_tienda_online/assets/css/loginStyle.css">
+    <link rel="stylesheet" href="../assets/css/login.css">
     <title>Login</title>
 </head>
 <body>

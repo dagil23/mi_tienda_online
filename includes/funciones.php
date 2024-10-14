@@ -125,14 +125,6 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
     $stmt->close();
 }
 
-
-//     if ($result && $result->num_rows > 0) {
-//         while ($row = $result->fetch_assoc()) {
-//             $categorias[] = $row['nombre'];
-//         }
-//     }
-//     return $categorias;
-// }
 function getCategorias()
 {
     $conexion = connectDB();
@@ -142,8 +134,12 @@ function getCategorias()
     $categorias = array();
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $categorias[] = $row["nombre"];
+            $categorias[] = [
+                'id_categoria' => $row['id_categoria'],
+                'nombre' => $row['nombre']
+            ];
         }
+        return $categorias;
     }
     $conexion->close();
     return $categorias;
@@ -163,10 +159,21 @@ function getColors()
     return $colores;
 }
 
-function addProduct($nombre,$precio,$color,$descripcion,$imagen,$cantidad)
+
+function addProduct($id_categoria,$nombre,$precio,$color,$descripcion,$imagen,$cantidad)
 {
 
     $conexion = connectDB();
+    $stmt = $conexion->prepare("INSERT INTO PRODUCTO(id_categoria,precio,color,imagen,descripcion,nombre_producto,cantidad_stock)VALUES(?, ? , ? , ?, ?, ?, ?)");
+    if($stmt === false){
+        die("Error en la preparacion de la consulta" . $conexion->error);
+    }
+    $stmt->bind_param("ddssssd",$id_categoria,$precio,$color,$imagen,$descripcion,$nombre,$cantidad);
+    if($stmt->execute()){
+        return "Producto agregado con exito";
+    }else{
+        return "Error al insertar el producto" . $stmt->error;
+    }
 
 }
 

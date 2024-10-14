@@ -34,7 +34,7 @@ $mensaje = "";
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rozha+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="http://localhost/Proyecto-DWES/mi_tienda_online/assets/css/registroStyle.css">
+    <link rel="stylesheet" href="../assets/css/registro.css">
     <title>Crear Cuenta</title>
 </head>
 <body>
