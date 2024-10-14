@@ -122,12 +122,9 @@ INSERT INTO WISHLIST (id_usuario, nombre) VALUES
 
 
 INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
-(1, 29.99, 'Beige', 'camiseta-beige.png', 'Camiseta de algodón', 'Camiseta Básica Beige', 50),
-(1, 29.99, 'Negro', 'camiseta-negra.png', 'Camiseta de algodón', 'Camiseta Básica Negra', 30),
-(2, 19.99, 'Negro', 'gloves-black.png', 'Guantes de invierno negros', 'Guantes Negros', 100),
-(2, 19.99, 'Marrón', 'gloves-brown.png', 'Guantes de invierno marrones', 'Guantes Marrones', 80),
-(2, 19.99, 'Gris', 'gloves-grey.png', 'Guantes de invierno grises', 'Guantes Grises', 60),
-(3, 34.99, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 40),
+(1, 30.00, 'Beige', 'camiseta-beige.png', 'Camiseta de algodón', 'Camiseta Básica Beige', 50),
+(1, 30.00, 'Negro', 'camiseta-negra.png', 'Camiseta de algodón', 'Camiseta Básica Negra', 30),
+(3, 34.00, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 40),
 (3, 34.99, 'Beige', 'polo-beige-back.png', 'Polo de algodón beige (vista trasera)', 'Polo Beige Vista Trasera', 40),
 (3, 34.99, 'Negro', 'polo-black.png', 'Polo de algodón negro', 'Polo Negro', 35),
 (3, 34.99, 'Marrón', 'polo-browndark.png', 'Polo marrón oscuro', 'Polo Marrón Oscuro', 25),

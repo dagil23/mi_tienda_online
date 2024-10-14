@@ -4,14 +4,18 @@ include '../includes/funciones.php';
 session_start();
 
 $productos = null;
+$categorias = getCategorias();
+$colores = getColors();
 
-if (isset($_POST["busqueda"]) || isset($_POST["tipo_prenda"]) || isset($_POST["precio"]) || isset($_POST["color"])) {
-    $terminoBusqueda = !empty($_POST["busqueda"]) ? $_POST["busqueda"] : null;
-    $tipo_prenda = !empty($_POST["tipo_prenda"]) ? $_POST["tipo_prenda"] : null;
-    $precio = !empty($_POST["precio"]) ? $_POST["precio"] : null;
-    $color = !empty($_POST["color"]) ? $_POST["color"] : null;
+if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["color"]) || isset($_GET["precio_min"]) || isset($_GET["precio_max"])) {
+    $terminoBusqueda = !empty($_GET["busqueda"]) ? $_GET["busqueda"] : null;
+    $tipo_prenda = !empty($_GET["tipo_prenda"]) ? $_GET["tipo_prenda"] : null;
+    $precio = !empty($_GET["precio"]) ? $_GET["precio"] : null;
+    $color = !empty($_GET["color"]) ? $_GET["color"] : null;
+    $precio_min = !empty($_GET["precio_min"]) ? $_GET["precio_min"] : null;
+    $precio_max = !empty($_GET["precio_max"]) ? $_GET["precio_max"] : null;
 
-    $productos = searchProduct($terminoBusqueda, $tipo_prenda, $color, $precio);
+    $productos = searchProduct($terminoBusqueda, $tipo_prenda, $color, $precio_min, $precio_max);
 
     if ($productos) {
         echo "Productos encontrados: " . $productos->num_rows; // Esto permite saber si se encontró algún producto
@@ -34,31 +38,28 @@ if (isset($_POST["busqueda"]) || isset($_POST["tipo_prenda"]) || isset($_POST["p
     <h1>Clarity</h1>
 </header>
 
-<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
-    <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_POST['busqueda']) ? htmlspecialchars($_POST['busqueda']) : '' ?>">
+<form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+    <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
     <label for="tipo_prenda">Tipo de Prenda: </label>
     <select name="tipo_prenda" id="tipo_prenda">
-        <option value="">Todas</option>
-        <option value="camisetas">Camisetas</option>
-        <option value="pantalones">Pantalones</option>
-        <option value="sudaderas">Sudaderas</option>
-        <option value="short">Shores</option>
-        <option value="Gorras">Gorras</option>
-        <option value="chaquetas">Chaquetas</option>
-        <option value="Polos">Polos</option>
+       <option value="">Todas</option>
+       <?php foreach($categorias as $categoria): ?>
+        <option value="<?= htmlspecialchars($categoria)?>"><?= htmlspecialchars($categoria)?></option>
+        <?php endforeach;?>
     </select>
 
     <label for="color">Color</label>
     <select name="color" id="color">
         <option value="">Todos</option>
-        <option value="negro">Negro</option>
-        <option value="blanco">Blanco</option>
-        <option value="azul">Azul</option>
-        <option value="marron">Marrón</option>
+        <?php foreach($colores as $color):?>
+            <option value="<?= htmlspecialchars($color) ?>"> <?= htmlspecialchars($color) ?></option>
+            <?php  endforeach;?>
     </select>
 
-    <label for="precio">Precio</label>
-    <input type="number" step="0.1" name="precio" id="precio" placeholder="Precio" value="<?= isset($_POST['precio']) ? htmlspecialchars($_POST['precio']) : '' ?>">
+    <label for="precio">Precio minimo</label>
+    <input type="number" step="0.1" name="precio_min" id="precio_min" placeholder="Precio" value="<?= isset($_POST['precio_min']) ? htmlspecialchars($_POST['precio_min']) : '' ?>">
+    <label for="precio">Precio maximo</label>
+    <input type="number" step="0.1" name="precio_max" id="precio_max" placeholder="Precio" value="<?= isset($_POST['precio_max']) ? htmlspecialchars($_POST['precio_max']) : '' ?>">
 
     <button type="submit">Buscar</button>
 </form>
@@ -84,11 +85,12 @@ if (isset($_POST["busqueda"]) || isset($_POST["tipo_prenda"]) || isset($_POST["p
                     <button>Add to Wishlist</button> 
                 </div>
             <?php endwhile; ?>
-        <?php elseif (isset($_POST["busqueda"])): ?>
+        <?php elseif (isset($_GET["busqueda"])): ?>
             <p>No se encontraron productos con el término de búsqueda</p>
         <?php else: ?>
             <p>Bienvenido a Clarity</p>
-            <img src="../images/camiseta-negra.png" alt="">
+            <h2>Productos destacados</h2>
+            <?php echo implode("_", $categorias) ?>
         <?php endif; ?>
     </section>
 </main>
