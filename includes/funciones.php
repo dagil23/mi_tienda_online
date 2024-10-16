@@ -124,7 +124,28 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
     $conexion->close();
     $stmt->close();
 }
+function getProductos(){
+    $conexion = connectDB();
+    $query = "SELECT * FROM producto ORDER BY id_producto ASC;";
+    $result = $conexion->query($query);
+    $productos = array();
+    if($result && $result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
 
+            $productos[] = [
+                'id_producto' => $row['id_producto'],
+                'id_categoria' => $row['id_categoria'],
+                'precio' => $row['precio'],
+                'color' => $row['color'],
+                'imagen' => $row['imagen'],
+                'descripcion' => $row['descripcion'],
+                'nombre_producto' => $row['nombre_producto'],
+                'cantidad_stock' => $row['cantidad_stock'],
+            ];
+        }
+        return $productos;
+    }
+}
 function getCategorias()
 {
     $conexion = connectDB();

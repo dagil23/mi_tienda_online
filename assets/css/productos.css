@@ -14,7 +14,19 @@ input,select{
 button{
     width: 100px;
 }
-li{
+.barra-navegacion,ul,li{
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    justify-content: space-around;
+    
+     
+}
+ul,li{
+    padding: 12px;
+    font-size: 25px;
+}
+#valido,#error{
     color: red;
     list-style: none;
 }

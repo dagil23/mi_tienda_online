@@ -2,9 +2,11 @@
 include '../config/database.php';
 include '../includes/funciones.php';
 session_start();
+$productos = getProductos();
 $categorias = getCategorias();
 $mensaje = array();
 $error = array();
+$action = isset($_GET['action']) ? $_GET['action'] : 'add';
 if (isset($_SESSION['email'])) {
     if (!isAdmin($_SESSION['email'])) {
         header("Location: ../public/index.php");
@@ -63,7 +65,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-    <h1>Productos</h1>
+    <header>
+        <h1>Productos</h1>
+        <nav class="barra-navegacion">
+            <ul>
+                <li><a href="?action=add">Agregar</a></li>
+                <li><a href="?action=edit">Modificar</a></li>
+                <li><a href="?action=delete">Eliminar</a></li>
+            </ul>
+        </nav>
+
+    </header>
+    <?php if($action == 'add'): ?>
     <form action="" method="post" enctype="multipart/form-data">
         <label for="nombre_producto">Nombre</label>
         <input type="text" name="nombre_producto">
@@ -89,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mensaje-exito">
                 <ul>
                     <?php foreach ($mensaje as $msg): ?>
-                        <li><?= $msg ?></li>
+                        <li id="valido"><?= $msg ?></li>
                         <?php endforeach; ?>
                 </ul>
             </div>
@@ -98,11 +111,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="mensaje-error">
                 <ul>
                     <?php foreach ($error as $err): ?>
-                        <li> <?= $err ?></li>
+                        <li id="error"> <?= $err ?></li>
                         <?php endforeach; ?>
                 </ul>
             </div>
         <?php endif; ?>
+        <?php elseif ($action == "edit"): ?>
+            <h1>Editar</h1>
+            <?php foreach($productos as $producto):?>
+            <table border="1" cellpadding="10">
+            <tbody>
+                <tr>
+                    <td>Id producto</td>
+                    <td>Id Categoria</td>
+                    <td>Precio</td>
+                    <td>Color</td>
+                    <td>Imagen</td> 
+                    <td>Descripcion</td>
+                    <td>Nombre</td>
+                    <td>Cantidad en Stock</td>
+                </tr>
+            <tr>
+            <td><?= $producto["id_producto"];?></td>
+            <td><?= $producto["id_categoria"]; ?></td>
+            <td><?= $producto["precio"]; ?></td>
+            <td><?= $producto["color"]; ?></td>
+            <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
+            <td><?= $producto["descripcion"]; ?></td>
+            <td><?= $producto["nombre_producto"]; ?></td>
+            <td><?= $producto["cantidad_stock"]; ?></td>
+            <td><a href="editar_producto.php?id=<?=$producto["id_producto"]?>">Editar</a></td>
+            </tr>
+            </tbody>
+            </table>
+            <?php endforeach; ?>
+            <?php elseif ($action == "delete"): ?>
+        <?php endif; ?>
+
+
 </body>
 
 </html>
+
+<!-- Con el id del producto, puedo redireccionar a la otra pagina y autorellenar los campos para editarlos -->
