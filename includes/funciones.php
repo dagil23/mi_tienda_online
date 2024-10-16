@@ -29,7 +29,6 @@ function isAdmin($email)
     $conexion->close();
     $adminValidation->close();
     return $status;
-
 }
 
 function verifyDNI($dni)
@@ -37,7 +36,6 @@ function verifyDNI($dni)
     $regex = "/^[0-9]{8}[A-Za-z]$/";
     $isValid = preg_match($regex, $dni) ? true : false;
     return $isValid;
-
 }
 function verifyEmail($email)
 {
@@ -124,13 +122,25 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
     $conexion->close();
     $stmt->close();
 }
-function getProductos(){
+function getProductos($id_producto = null)
+{
     $conexion = connectDB();
-    $query = "SELECT * FROM producto ORDER BY id_producto ASC;";
-    $result = $conexion->query($query);
+
+    if ($id_producto) {
+        $query = "SELECT * FROM PRODUCTO WHERE id_producto = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $id_producto);
+    } else {
+
+        $query = "SELECT * FROM producto ORDER BY id_producto ASC;";
+        $stmt = $conexion->prepare($query);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
     $productos = array();
-    if($result && $result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
 
             $productos[] = [
                 'id_producto' => $row['id_producto'],
@@ -143,8 +153,88 @@ function getProductos(){
                 'cantidad_stock' => $row['cantidad_stock'],
             ];
         }
-        return $productos;
+        return $id_producto ? $productos[0] : $productos;
+        $conexion->close();
+        $stmt->close();
     }
+}
+
+function updateProducto ($id_producto, $nombre, $precio, $cantidad, $color = null, $descripcion = null,
+                        $imagen = null, $id_categoria = null) {
+                        
+    $conexion = connectDB();
+    $query = " UPDATE PRODUCTO SET ";
+    $params = array();
+    $types = "";
+
+    if(!empty($nombre)){
+
+        $query .= " nombre_producto = ?, ";
+        $params [] = $nombre;
+        $types .= "s";
+    }
+
+    if(!empty($precio)){
+
+        $query .= " precio = ?, ";
+        $params [] = $precio;
+        $types .= "d";
+    }
+
+    if(!empty($cantidad)){
+
+        $query .= " cantidad_stock = ?, ";
+        $params [] = $cantidad;
+        $types = "i";
+    }
+
+    if(!empty($color)){
+        
+        $query .= " color = ?, ";
+        $params[] .= $color;
+        $types .= "s";
+    };
+
+    if(!empty($descripcion)){
+
+        $query .= " descripcion = ?, ";
+        $params [] = $descripcion;
+        $types .= "s";
+    }
+
+    if(!empty($imagen)){
+        
+        $query .= " imagen = ?, ";
+        $params [] = $imagen;
+        $types .= "s";
+    }
+
+    if(!empty($id_categoria)){
+
+        $query .= " id_categoria = ?, ";
+        $params [] = $id_categoria;
+        $types .= "i";
+    }
+
+    $query = rtrim($query,",");
+    $stmt = $conexion->prepare($query);
+    if (!$stmt) {
+        die("Error al preparar la consulta: " . $conexion->error);
+    }
+
+    if(!empty($params)){
+
+        $stmt->bind_param($types,...$params);
+    }
+
+    if ($stmt->execute()) {
+        return $stmt->get_result();
+    } else {
+        die("Error al ejecutar la consulta: " . $stmt->error);
+    }
+
+    $conexion->close();
+    $stmt->close();
 }
 function getCategorias()
 {
@@ -162,8 +252,8 @@ function getCategorias()
         }
         return $categorias;
     }
-    $conexion->close();
     return $categorias;
+    $conexion->close();
 }
 
 function getColors()
@@ -178,24 +268,24 @@ function getColors()
         }
     }
     return $colores;
+    $conexion->close();
 }
 
 
-function addProduct($id_categoria,$nombre,$precio,$color,$descripcion,$imagen,$cantidad)
+function addProduct($id_categoria, $nombre, $precio, $color, $descripcion, $imagen, $cantidad)
 {
 
     $conexion = connectDB();
     $stmt = $conexion->prepare("INSERT INTO PRODUCTO(id_categoria,precio,color,imagen,descripcion,nombre_producto,cantidad_stock)VALUES(?, ? , ? , ?, ?, ?, ?)");
-    if($stmt === false){
+    if ($stmt === false) {
         die("Error en la preparacion de la consulta" . $conexion->error);
     }
-    $stmt->bind_param("ddssssd",$id_categoria,$precio,$color,$imagen,$descripcion,$nombre,$cantidad);
-    if($stmt->execute()){
+    $stmt->bind_param("ddssssd", $id_categoria, $precio, $color, $imagen, $descripcion, $nombre, $cantidad);
+    if ($stmt->execute()) {
         return "Producto agregado con exito";
-    }else{
+    } else {
         return "Error al insertar el producto" . $stmt->error;
     }
-
+    $conexion->close();
+    $stmt->close();
 }
-
-
