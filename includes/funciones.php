@@ -159,7 +159,7 @@ function getProductos($id_producto = null)
     }
 }
 
-function updateProducto ($id_producto, $nombre, $precio, $cantidad, $color = null, $descripcion = null,
+function updateProducto ($id_producto,$nombre, $precio, $cantidad, $color = null, $descripcion = null,
                         $imagen = null, $id_categoria = null) {
                         
     $conexion = connectDB();
@@ -185,13 +185,13 @@ function updateProducto ($id_producto, $nombre, $precio, $cantidad, $color = nul
 
         $query .= " cantidad_stock = ?, ";
         $params [] = $cantidad;
-        $types = "i";
+        $types .= "i";
     }
 
     if(!empty($color)){
         
         $query .= " color = ?, ";
-        $params[] .= $color;
+        $params [] = $color;
         $types .= "s";
     };
 
@@ -216,7 +216,10 @@ function updateProducto ($id_producto, $nombre, $precio, $cantidad, $color = nul
         $types .= "i";
     }
 
-    $query = rtrim($query,",");
+    $query = rtrim($query,", ") . " WHERE id_producto = ? ";
+    $params [] = $id_producto;
+    $types .= "i";
+
     $stmt = $conexion->prepare($query);
     if (!$stmt) {
         die("Error al preparar la consulta: " . $conexion->error);
@@ -228,9 +231,10 @@ function updateProducto ($id_producto, $nombre, $precio, $cantidad, $color = nul
     }
 
     if ($stmt->execute()) {
-        return $stmt->get_result();
+        return true;
     } else {
         die("Error al ejecutar la consulta: " . $stmt->error);
+       
     }
 
     $conexion->close();

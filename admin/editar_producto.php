@@ -1,15 +1,43 @@
 <?php
 include '../includes/funciones.php';
-$id_producto = $_GET["id"];
+$id_producto = isset($_GET["id"]) ? $_GET["id"] : null;
 $producto = getProductos($id_producto);
 $categorias = getCategorias();
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         
+        $nombre_producto = !empty($_POST["nombre"]) ? $_POST["nombre"] : $producto["nombre_producto"];
+        $precio = !empty($_POST["precio"]) ? $_POST["precio"] : $producto["precio"];
+        $color = !empty($_POST["color"]) ? $_POST["color"] : $producto["color"];
+        $cantidad = !empty($_POST["cantidad"]) ? $_POST["cantidad"] : $producto["cantidad_stock"];
+        $categoria = !empty( $_POST["id_categoria"]) ? $_POST["id_categoria"] : $producto["id_categoria"];
+        $descripcion = !empty( $_POST["descripcion"]) ? $_POST["descripcion"] : $producto["descripcion"];
+
+        if(!empty($_FILES["imagen"]["name"])){
+
+            $pathImages = "../assets/images/" . basename($_FILES["imagen"]["name"]);
+            if(move_uploaded_file($_FILES["imagen"]["tmp_name"], $pathImages )){
+                $imagen = $_FILES["imagen"]["name"];
+            }else{
+                echo "error al subir la imagen";
+                $imagen = $producto["imagen"];
+            }
+        }else{
+            $imagen = $producto["imagen"];
+        }
+
+        if(updateProducto( $id_producto,$nombre_producto, $precio, $cantidad, $color, $descripcion,$imagen, $categoria)){
+            header("Location: ../admin/productos.php?action=edit");
+        }else{
+            echo "Error al actualizar el producto";
+        }
+        
     }
+
+
 ?>
 
-<!DOCTYPE html>
+<!-- <!DOCTYPE html> -->
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -21,7 +49,7 @@ $categorias = getCategorias();
     <h1>Aqui voy a editar los productos con un formulario</h1>
     <p><?=$id_producto?></p>
 
-    <form action="<?php echo $_SERVER["PHP_SELF"]?>" method="post">
+    <form action="<?php echo $_SERVER["PHP_SELF"] . "?id=" . $_GET["id"] ?>" method="post" enctype="multipart/form-data">
         <label for="nombre"> Nombre</label>
         <input type="text" name="nombre" id="nombre" value="<?=$producto["nombre_producto"]?>">
         <label for="precio">Precio</label>
@@ -46,7 +74,7 @@ $categorias = getCategorias();
         <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
         <button type="submit">Guardar Cambios</button>
 
-        <?= var_dump($producto) ?>
+        <?= var_dump($nombre_producto) ?>
         
     </form>
 </body>
