@@ -146,6 +146,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </table>
             <?php endforeach; ?>
             <?php elseif ($action == "delete"): ?>
+                <h1>Eliminar</h1>
+            <?php foreach($productos as $producto):?>
+            <table border="1" cellpadding="10">
+            <tbody>
+                <tr>
+                    <td>Id producto</td>
+                    <td>Id Categoria</td>
+                    <td>Precio</td>
+                    <td>Color</td>
+                    <td>Imagen</td> 
+                    <td>Descripcion</td>
+                    <td>Nombre</td>
+                    <td>Cantidad en Stock</td>
+                </tr>
+            <tr>
+            <td><?= $producto["id_producto"];?></td>
+            <td><?= $producto["id_categoria"]; ?></td>
+            <td><?= $producto["precio"]; ?></td>
+            <td><?= $producto["color"]; ?></td>
+            <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
+            <td><?= $producto["descripcion"]; ?></td>
+            <td><?= $producto["nombre_producto"]; ?></td>
+            <td><?= $producto["cantidad_stock"]; ?></td>
+            <td><a href="eliminar_producto.php?id=<?=$producto["id_producto"]?>">Eliminar</a></td>
+            </tr>
+            </tbody>
+            </table>
+            <?php endforeach; ?>
         <?php endif; ?>
 
 

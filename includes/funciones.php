@@ -240,6 +240,22 @@ function updateProducto ($id_producto,$nombre, $precio, $cantidad, $color = null
     $conexion->close();
     $stmt->close();
 }
+
+function deleteProduct($id_producto){
+
+    $conexion = connectDB();
+    $stmt =  $conexion->prepare("DELETE FROM PRODUCTO WHERE id_producto = ? ");
+    if (!$stmt) {
+        die("Error al preparar la consulta ". $conexion->error);
+    }
+
+    $stmt->bind_param("s", $id_producto);
+    if( $stmt->execute() ){
+        return true;
+    }else{
+        return false;
+    }
+}
 function getCategorias()
 {
     $conexion = connectDB();
