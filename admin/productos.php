@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     ];
 
     //Aqui estoy accediendo a a la propiedad de imagen[size] para saber si tiene un tamaño
+    //Tengo que verificar que la imagen que se suba sea el formato MIME correcto pnp,jpg
     if ($_FILES["imagen"]["size"] == 0) {
         $error[] = "Debes de subir una imagen";
     }
