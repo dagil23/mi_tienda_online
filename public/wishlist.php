@@ -1,5 +1,6 @@
 <?php
 include '../config/database.php';
+include '../includes/header.php';
 ?>
 
 <!DOCTYPE html>
@@ -12,4 +13,5 @@ include '../config/database.php';
 <body>
     <h1>Wishlist</h1>
 </body>
+<?php include '../includes/footer.php';?>
 </html>

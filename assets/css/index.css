@@ -3,6 +3,7 @@
 body{
 
     background-color: var(--primaryColor);
+    flex: 5;
 }
 h1{
     font-family: var(--titlesLetters);

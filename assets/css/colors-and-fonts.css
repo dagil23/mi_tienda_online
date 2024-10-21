@@ -1,5 +1,6 @@
 :root{
     --primaryColor: hsl(60, 100%, 75%);
     --secondaryColor:hsl(60, 56%, 81%);
+    --nav-bar-color: hsl(0, 0%, 13%);
     --titlesLetters: "Rozha One", serif;
 }

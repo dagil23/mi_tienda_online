@@ -1,6 +1,7 @@
 <?php
 include '../config/database.php';
 include '../includes/funciones.php';
+include '../includes/header.php';
 session_start();
 
 $productos = null;
@@ -36,10 +37,7 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
 </head>
 
 <body>
-    <header>
-        <h1>Clarity</h1>
-    </header>
-
+        <h1>index</h1>
     <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
         <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
         <label for="tipo_prenda">Tipo de Prenda: </label>
@@ -65,16 +63,6 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
 
         <button type="submit">Buscar</button>
     </form>
-
-    <nav>
-        <ul>
-            <li><a href="../admin/index.php">Zona Admin</a></li>
-            <li><a href="../public/carrito.php">Carrito</a></li>
-            <li><a href="../public/wishlist.php">Wishlist</a></li>
-            <li><a href="../public/registro.php">Sign Up</a></li>
-        </ul>
-    </nav>
-
     <main>
         <section>
             <?php if ($productos && $productos->num_rows > 0): ?>
@@ -99,9 +87,7 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
             <?php endif; ?>
         </section>
     </main>
-
-    <footer>
-    </footer>
+    <?php include '../includes/footer.php';?>
 </body>
 
 </html>

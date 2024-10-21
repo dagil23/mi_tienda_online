@@ -1,6 +1,10 @@
 <?php
 include '../config/database.php';
 include '../includes/funciones.php';
+include '../includes/header.php';
+
+
+
 session_start();
 $message = "";
 if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -26,13 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
     <title>Login</title>
 </head>
 <body>
-    <header>
-        <h1>Clarity</h1>
-        <nav>
-
-        </nav>
-        <header>
-            <main>
+        <main>
             <section>
             <fieldset>
         <h2>Inicio de Sesión</h2>
@@ -48,8 +46,6 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
             </fieldset>
         </section>
             </main>
-            <footer>
-
-            </footer>
+<?php include '../includes/footer.php';?>
 </body>
 </html>
