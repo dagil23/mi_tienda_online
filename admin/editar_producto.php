@@ -33,10 +33,7 @@ $categorias = getCategorias();
         }
         
     }
-
-
 ?>
-
 <!-- <!DOCTYPE html> -->
 <html lang="en">
 <head>

@@ -105,14 +105,17 @@ INSERT INTO PEDIDOS (pedido_usuario, dni, precio_total, nombre, apellidos, talla
 (4, '34567890D', 59.99, 'Ana', 'Sánchez', 'XXL', 'enviado', 'Calle Azul 321'),
 (5, '45678901E', 39.99, 'Carlos', 'Ramírez', 'M', 'carrito', 'Avenida del Sol 654');
 
-INSERT INTO CATEGORIA (nombre, descripcion) VALUES
-('Camisetas', 'Ropa de vestir para la parte superior del cuerpo, generalmente casual.'),
-('Pantalones', 'Ropa para la parte inferior del cuerpo, generalmente cubriendo ambas piernas.'),
-('Sudaderas', 'Prendas cómodas para el torso, con o sin capucha.'),
-('Shorts', 'Prendas cortas para la parte inferior del cuerpo, ideales para el clima cálido.'),
-('Gorras', 'Accesorios para la cabeza, comúnmente utilizados para el sol o estilo.'),
-('Chaquetas', 'Prendas exteriores que protegen contra el frío o el clima.'),
-('Polos', 'Camisas con cuello y botones, normalmente de algodón.');
+INSERT INTO CATEGORIA (nombre, descripcion, imagen) VALUES
+('Camisetas', 'Ropa de vestir para la parte superior del cuerpo, generalmente casual.', 'camisa.png'),
+('Pantalones', 'Ropa para la parte inferior del cuerpo, generalmente cubriendo ambas piernas.', 'pantalones.png'),
+('Sudaderas', 'Prendas cómodas para el torso, con o sin capucha.', 'sudadera.png'),
+('Shorts', 'Prendas cortas para la parte inferior del cuerpo, ideales para el clima cálido.', 'short.png'),
+('Gorras', 'Accesorios para la cabeza, comúnmente utilizados para el sol o estilo.', 'gorra.png'),
+('Chaquetas', 'Prendas exteriores que protegen contra el frío o el clima.', 'chaqueta.png'),
+('Polos', 'Camisas con cuello y botones, normalmente de algodón.', 'polos.png'),
+('Guantes', 'Prendas que cubren las manos y protegen contra el frío.', 'guantes.png'),
+('Zapatos', 'Calzado para proteger los pies y proporcionar confort.', 'zapatos.png');
+
 
 INSERT INTO WISHLIST (id_usuario, nombre) VALUES
 (1, 'Wishlist de Daniel'),
