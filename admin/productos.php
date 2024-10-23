@@ -1,4 +1,4 @@
-<?php
+<?php 
 include '../config/database.php';
 include '../includes/funciones.php';
 session_start();
@@ -34,9 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-
     if (empty($error)) {   //Si no encontramos ningun error introducimos el producto
-
         $imagen = $_FILES["imagen"]["name"];
         $pathImages = "../assets/images" . basename($imagen);
         move_uploaded_file($_FILES["imagen"]["tmp_name"], $pathImages);
@@ -51,8 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $mensaje[] = addProduct($id_categoria, $nombre, $precio, $color, $descripcion, $imagen, $cantidad);
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -70,114 +66,117 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>Productos</h1>
         <nav class="barra-navegacion">
             <ul>
+                <li><a href="../admin/index.php">Inicio</a></li>
                 <li><a href="?action=add">Agregar</a></li>
                 <li><a href="?action=edit">Modificar</a></li>
                 <li><a href="?action=delete">Eliminar</a></li>
             </ul>
         </nav>
-
     </header>
+    
     <?php if($action == 'add'): ?>
-    <form action="" method="post" enctype="multipart/form-data">
+    <form action="" method="post" enctype="multipart/form-data" class="formulario-producto">
         <label for="nombre_producto">Nombre</label>
-        <input type="text" name="nombre_producto">
+        <input type="text" name="nombre_producto" class="input-producto">
         <label for="categoria">Categoria</label>
-        <select name="categoria" id="categoria">
+        <select name="categoria" id="categoria" class="select-producto">
             <?php foreach ($categorias as $categoria): ?>
                 <option value="<?= htmlspecialchars($categoria["id_categoria"]) ?>"> <?= htmlspecialchars($categoria["nombre"]) ?></option>
             <?php endforeach; ?>
         </select>
         <label for="precio">Precio</label>
-        <input type="number" name="precio" step="0.1">
+        <input type="number" name="precio" step="0.1" class="input-producto">
         <label for="text">Color</label>
-        <input type="text" name="color">
+        <input type="text" name="color" class="input-producto">
         <label for="imagen">Imagen</label>
-        <input type="file" name="imagen">
+        <input type="file" name="imagen" class="input-producto">
         <label for="cantidad">Cantidad</label>
-        <input type="number" name="cantidad" id="cantidad">
+        <input type="number" name="cantidad" id="cantidad" class="input-producto">
         <label for="descripcion">Descripcion del producto</label>
-        <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
-        <button type="submit">Agregar</button>
+        <textarea name="descripcion" id="descripcion" rows="4" cols="50" class="textarea-producto"></textarea>
+        <button type="submit" class="btn-producto">Agregar</button>
 
         <?php if (!empty($mensaje)): ?>
             <div class="mensaje-exito">
                 <ul>
                     <?php foreach ($mensaje as $msg): ?>
                         <li id="valido"><?= $msg ?></li>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         <?php endif; ?>
+        
         <?php if (!empty($error)): ?>
             <div class="mensaje-error">
                 <ul>
                     <?php foreach ($error as $err): ?>
                         <li id="error"> <?= $err ?></li>
-                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </ul>
             </div>
         <?php endif; ?>
-        <?php elseif ($action == "edit"): ?>
-            <h1>Editar</h1>
-            <?php foreach($productos as $producto):?>
-            <table border="1" cellpadding="10">
-            <tbody>
-                <tr>
-                    <td>Id producto</td>
-                    <td>Id Categoria</td>
-                    <td>Precio</td>
-                    <td>Color</td>
-                    <td>Imagen</td> 
-                    <td>Descripcion</td>
-                    <td>Nombre</td>
-                    <td>Cantidad en Stock</td>
-                </tr>
+    </form>
+    
+    <?php elseif ($action == "edit"): ?>
+        <h1>Editar</h1>
+        <?php foreach($productos as $producto):?>
+        <table border="1" cellpadding="10" class="tabla-producto">
+        <tbody>
             <tr>
-            <td><?= $producto["id_producto"];?></td>
-            <td><?= $producto["id_categoria"]; ?></td>
-            <td><?= $producto["precio"]; ?></td>
-            <td><?= $producto["color"]; ?></td>
-            <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
-            <td><?= $producto["descripcion"]; ?></td>
-            <td><?= $producto["nombre_producto"]; ?></td>
-            <td><?= $producto["cantidad_stock"]; ?></td>
-            <td><a href="editar_producto.php?id=<?=$producto["id_producto"]?>">Editar</a></td>
+                <td>Id producto</td>
+                <td>Id Categoria</td>
+                <td>Precio</td>
+                <td>Color</td>
+                <td>Imagen</td> 
+                <td>Descripcion</td>
+                <td>Nombre</td>
+                <td>Cantidad en Stock</td>
             </tr>
-            </tbody>
-            </table>
-            <?php endforeach; ?>
-            <?php elseif ($action == "delete"): ?>
-                <h1>Eliminar</h1>
-            <?php foreach($productos as $producto):?>
-            <table border="1" cellpadding="10">
-            <tbody>
-                <tr>
-                    <td>Id producto</td>
-                    <td>Id Categoria</td>
-                    <td>Precio</td>
-                    <td>Color</td>
-                    <td>Imagen</td> 
-                    <td>Descripcion</td>
-                    <td>Nombre</td>
-                    <td>Cantidad en Stock</td>
-                </tr>
             <tr>
-            <td><?= $producto["id_producto"];?></td>
-            <td><?= $producto["id_categoria"]; ?></td>
-            <td><?= $producto["precio"]; ?></td>
-            <td><?= $producto["color"]; ?></td>
-            <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
-            <td><?= $producto["descripcion"]; ?></td>
-            <td><?= $producto["nombre_producto"]; ?></td>
-            <td><?= $producto["cantidad_stock"]; ?></td>
-            <td><a href="eliminar_producto.php?id=<?=$producto["id_producto"]?>">Eliminar</a></td>
+                <td><?= $producto["id_producto"];?></td>
+                <td><?= $producto["id_categoria"]; ?></td>
+                <td><?= $producto["precio"]; ?></td>
+                <td><?= $producto["color"]; ?></td>
+                <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
+                <td><?= $producto["descripcion"]; ?></td>
+                <td><?= $producto["nombre_producto"]; ?></td>
+                <td><?= $producto["cantidad_stock"]; ?></td>
+                <td><a href="editar_producto.php?id=<?=$producto["id_producto"]?>">Editar</a></td>
             </tr>
-            </tbody>
-            </table>
-            <?php endforeach; ?>
-        <?php endif; ?>
-
-
+        </tbody>
+        </table>
+        <?php endforeach; ?>
+    
+    <?php elseif ($action == "delete"): ?>
+        <h1>Eliminar</h1>
+        <?php foreach($productos as $producto):?>
+        <table border="1" cellpadding="10" class="tabla-producto">
+        <tbody>
+            <tr>
+                <td>Id producto</td>
+                <td>Id Categoria</td>
+                <td>Precio</td>
+                <td>Color</td>
+                <td>Imagen</td> 
+                <td>Descripcion</td>
+                <td>Nombre</td>
+                <td>Cantidad en Stock</td>
+            </tr>
+            <tr>
+                <td><?= $producto["id_producto"];?></td>
+                <td><?= $producto["id_categoria"]; ?></td>
+                <td><?= $producto["precio"]; ?></td>
+                <td><?= $producto["color"]; ?></td>
+                <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
+                <td><?= $producto["descripcion"]; ?></td>
+                <td><?= $producto["nombre_producto"]; ?></td>
+                <td><?= $producto["cantidad_stock"]; ?></td>
+                <td><a href="eliminar_producto.php?id=<?=$producto["id_producto"]?>">Eliminar</a></td>
+            </tr>
+        </tbody>
+        </table>
+        <?php endforeach; ?>
+    <?php endif; ?>
 </body>
 
 </html>

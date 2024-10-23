@@ -10,9 +10,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $descripcion = !empty($_POST["descripcion"]) ? $_POST["descripcion"] : $categorias["descripcion"];
 
     if (!empty($_FILES["imagen"]["name"])) {
-        $isValid = verifyImage($_FILES["imagen"], "../assets/images-categorias/");
-        if($isValid){
+        if(verifyImage($_FILES["imagen"])){
+            $pathImages = "../assets/images-categorias/" . basename($_FILES["imagen"]["name"]);
+            move_uploaded_file($_FILES["imagen"]["tmp_name"],$pathImages);
             $imagen = $_FILES["imagen"]["name"];
+
             if(updateCategoria($id_categoria,$nombre,$descripcion,$imagen)){
 
                 echo "Categoria actualizada";

@@ -42,18 +42,13 @@ function verifyEmail($email)
     $isValid = filter_var($email, FILTER_VALIDATE_EMAIL) ? true : false;
     return $isValid;
 }
-function verifyImage($archivo, $directorioDestino, $tiposPermitidos = ["image/png", "image/jpeg"])
+function verifyImage($archivo, $tiposPermitidos = ["image/png", "image/jpeg"])
 {
 
     if (!empty($archivo)) {
         $tipoArchivo = $archivo["type"];
-        $nombreArchivo = basename($archivo["name"]);
-
         if (in_array($tipoArchivo, $tiposPermitidos)) {
-            $rutaArchivo = $directorioDestino . $nombreArchivo;
-            if (move_uploaded_file($archivo["tmp_name"], $rutaArchivo)) {
                 return true;
-            }
         }
     }
     return false;
@@ -385,25 +380,24 @@ function updateCategoria($id_categoria, $nombre, $descripcion, $imagen)
     $stmt->close();
 }
 
-function deleteCategoria($id_categoria){
+function deleteCategoria($id_categoria) {
     $conexion = connectDB();
-    $query = " DELETE FROM CATEGORIA WHERE id_categoria = ? ";
+    $query = "DELETE FROM CATEGORIA WHERE id_categoria = ?";
+    
     $stmt = $conexion->prepare($query);
-    if(!$stmt){
-        die("Error al preparar la consulta" . $conexion->error);
-    }
-    $stmt->bind_param("i",$id_categoria);
-    if($stmt->execute()){
-        return true;
-        $stmt->close();
-        $conexion->close();
-    }else{
-        return false;
-        $stmt->close();
-        $conexion->close();
+    if (!$stmt) {
+        die("Error al preparar la consulta: " . $conexion->error);
     }
 
+    $stmt->bind_param("i", $id_categoria);
+    $resultado = $stmt->execute();
+
+    $stmt->close();
+    $conexion->close();
+
+    return $resultado;
 }
+
 function getColors()
 {
     $conexion = connectDB();

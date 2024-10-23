@@ -1,17 +1,16 @@
 <?php
 include '../includes/funciones.php';
-$id_categoria = isset($_GET["id"]) ? $_GET["id"] : null;
+$id_categoria = isset($_GET["id"]) ? (int)$_GET["id"] : null;
+echo gettype($id_categoria);
 $confirmar = "confirmacion";
 $mensaje = "";
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        if(isset($_POST["cofirmacion"]) && $_POST["confirmacion"] == $confirmar){
+        if(isset($_POST["confirmacion"]) && $_POST["confirmacion"] == $confirmar){
             $mensaje = deleteCategoria($id_categoria) ? "Categoria eliminada" : "Error al eliminar la categoria";
         }
     }
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +20,8 @@ $mensaje = "";
     <title>Document</title>
 </head>
 <body>
-<p>Escribe la palabra <strong>confirmacion</strong>  para eliminar el producto</p>
-        <legend>Eliminar producto</legend>
+<p>Escribe la palabra <strong>confirmacion</strong>  para eliminar la categoria</p>
+        <legend>Eliminar Categoria</legend>
         <form action="<?= $_SERVER["PHP_SELF"]  . "?id=" . $_GET["id"] ?>" method="post">
         <label for="confirmacion"></label>
         <input type="text" name="confirmacion" id="confirmacion">

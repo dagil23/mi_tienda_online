@@ -17,7 +17,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $campos = [
         'nombre' => "Nombre de la categoria",
         'descripcion' => "Descripcion",
-        'imagen' => "Imagen",
     ];
 
     foreach ($campos as $campo => $nombreCampo) {
@@ -25,17 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $errores[] = "El campo $nombreCampo no puede estar vacio";
         }
     }
-
-    if (!empty($errores)) {
-        if (verifyImage($_FILES["imagen"]["name"], "../assets/images-categorias/")) {
+    if (verifyImage($_FILES["imagen"])) {
+        $pathImages = "../assets/images-categorias/" .  basename($_FILES["imagen"]["name"]);
+        if (move_uploaded_file($_FILES["imagen"]["tmp_name"], $pathImages)) {
             $imagen = $_FILES["imagen"]["name"];
-        }else{
-            $errores [] = "Formato de imagen incorrecto";
+            $nombre = $_POST["nombre"];
+            $descripcion = $_POST["descripcion"];
+            if (addCategoria($nombre, $descripcion, $imagen)) {
+                $mensaje[] = "Categoria $nombre añadida con exito";
+            } else {
+                $errores[] = "Error al añadir la categoria $nombre";
+            }
+        } else {
+                $errores[] = "Error al subir la imagen";
         }
-        $nombre = $_POST["nombre"];
-        $descripcion = $_POST["descripcion"];
-        $mensaje[] = addCategoria($nombre, $descripcion, $imagen);
-    }
+    } 
 }
 ?>
 
@@ -48,7 +51,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../assets/css/categoria.css">
     <title>Categorias</title>
 </head>
-
 <body>
     <header>
         <nav>
@@ -104,7 +106,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td><img src="../assets/images-categorias/<?= htmlspecialchars($categoria['imagen']); ?>" alt="Imagen de la categoría"></td>
                         <td><a href="../admin/editar_categoria.php?id=<?= $categoria['id_categoria']; ?>" class="btn">Editar</a></td>
                         <td><a href="../admin/eliminar_categoria.php?id=<?= $categoria['id_categoria']; ?>" class="btn">Eliminar</a></td>
-
                     </tr>
                 <?php endforeach; ?>
             </tbody>
