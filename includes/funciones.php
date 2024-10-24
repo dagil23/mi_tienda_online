@@ -132,6 +132,44 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
     $conexion->close();
     $stmt->close();
 }
+
+function getInfoUser($email= null){
+    $conexion = connectDB();
+    if($email){
+        $query = " SELECT * FROM USUARIOS WHERE email = ? ";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("s",$email);
+    }else{
+        $query = " SELECT * FROM USUARIOS ORDER BY id_usuario ASC ";
+        $stmt = $conexion->prepare($query);
+    }
+
+    $stmt->execute();
+    $usuarios = array();
+    $result = $stmt->get_result();
+
+    if($result && $result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            $usuarios [] = [
+                'id_usuario' => $row['id_usuario'],
+                'nombre' => $row['nombre'],
+                'apellido' => $row['apellido'],
+                'email' => $row['email'],
+                'dni' => $row['dni'],
+                'fecha_registro' => $row['fecha_registro'],
+                'contraseña' => $row['contraseña'],
+                'direccion' => $row['direccion'],
+                'telefono' => $row['telefono'],
+                'rol' => $row['rol']
+            ];
+        }
+        return $email ? $usuarios[0] : $usuarios;
+        $conexion->close();
+        $stmt->close();
+    }
+
+
+}
 function getProductos($id_producto = null)
 {
     $conexion = connectDB();
@@ -142,7 +180,7 @@ function getProductos($id_producto = null)
         $stmt->bind_param("i", $id_producto);
     } else {
 
-        $query = "SELECT * FROM producto ORDER BY id_producto ASC;";
+        $query = "SELECT * FROM PRODUCTO ORDER BY id_producto ASC;";
         $stmt = $conexion->prepare($query);
     }
     $stmt->execute();
@@ -430,4 +468,24 @@ function addProduct($id_categoria, $nombre, $precio, $color, $descripcion, $imag
     }
     $conexion->close();
     $stmt->close();
+}
+
+function addPedido($id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$estado,$direccion){
+
+    $conexion = connectDB();
+    $stmt =$conexion->prepare("INSERT INTO PEDIDOS(pedido_usuario,dni, precio_total,nombre,apellidos,tallas_disponibles,estado,direccion) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ");
+    if(!$stmt){
+        die("Error en la preparacion de la consulta " . $conexion->error);
+    }
+    $stmt->bind_param("isdsssss",$id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$estado,$direccion);
+    if($stmt->execute()){
+        return true;
+    }else{
+        return false;
+        $stmt->error;
+    }
+    $conexion->close();
+    $stmt->close();
+
+
 }

@@ -2,6 +2,7 @@
 include '../config/database.php';
 include '../includes/funciones.php';
 include '../includes/header.php';
+
 session_start();
 $mensaje = "";
     if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -39,16 +40,6 @@ $mensaje = "";
     <title>Crear Cuenta</title>
 </head>
 <body>
-    <header>
-        <h1>Clarity</h1>
-        <nav>
-            <ul>
-                <li>Login</li>
-                <li>Carrito</li>
-                <li>Whislist</li>
-            </ul>
-        <nav>
-        <header>
             <main>
         <section>
             <fieldset>

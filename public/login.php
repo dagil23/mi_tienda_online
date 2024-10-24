@@ -9,7 +9,15 @@ session_start();
 $message = "";
 if($_SERVER['REQUEST_METHOD'] == "POST"){
         if (verifyUser($_POST["email"],$_POST["password"])){
-            $_SESSION['email'] = $_POST['email'];
+            $user = getInfoUser($_POST["email"]);
+            $_SESSION["id_usuario"] = $user["id_usurio"];
+            $_SESSION["nombre"] = $user["nombre"];
+            $_SESSION["apellido"] = $user["apellido"];
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["dni"] = $user["dni"];
+            $_SESSION["direccion"] = $user["direccion"];
+            $_SESSION["telefono"] = $user["telefono"];
+            echo var_dump($user);
             header("Location: ../public/index.php");
         }else{
             $message = "<p>Usuario o contraseña incorrecto</p>";
