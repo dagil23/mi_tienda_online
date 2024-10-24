@@ -1,0 +1,57 @@
+@import url(../css/colors-and-fonts.css);
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--primaryColor);
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.admin-header {
+    background-color: var(--nav-bar-color);
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin-header h1 {
+    font-family: var(--titlesLetters);
+    margin: 0;
+}
+
+.admin-nav {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.admin-nav li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s;
+}
+
+.admin-nav li a:hover {
+    background-color: var(--secondaryColor);
+    border-radius: 5px;
+}
+
+.admin-main {
+    padding: 20px;
+}
+
+.welcome-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-section h2 {
+    font-family: var(--titlesLetters);
+    color: var(--nav-bar-color);
+}

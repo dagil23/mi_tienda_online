@@ -1,32 +1,117 @@
 @import url(../css/colors-and-fonts.css);
 
-body{
 
+body {
+    font-family: Arial, sans-serif;
     background-color: var(--primaryColor);
+    margin: 0;
+    padding: 0;
+    color: #333;
 }
-form{
+
+header {
+    background-color: var(--nav-bar-color);
+    color: #fff;
+    padding: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
-input,select{
-    width:200px ;
+
+header h1 {
+    font-family: var(--titlesLetters);
+    margin: 0;
 }
-button{
-    width: 100px;
-}
-.barra-navegacion,ul,li{
+
+.barra-navegacion ul {
+    list-style: none;
     display: flex;
-    flex-direction: row;
-    list-style: none;
-    justify-content: space-around;
-    
-     
+    gap: 15px;
+    padding: 0;
 }
-ul,li{
-    padding: 12px;
-    font-size: 25px;
+
+.barra-navegacion a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    transition: background-color 0.3s;
 }
-#valido,#error{
-    color: red;
-    list-style: none;
+
+.barra-navegacion a:hover {
+    background-color: var(--secondaryColor);
+    border-radius: 5px;
+}
+
+.formulario-producto {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-producto label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-producto,
+.select-producto,
+.textarea-producto {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.btn-producto {
+    background-color: var(--nav-bar-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-producto:hover {
+    background-color: var(--secondaryColor);
+}
+
+.mensaje-exito,
+.mensaje-error {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.mensaje-exito {
+    background-color: #dff0d8;
+    color: #3c763d;
+}
+
+.mensaje-error {
+    background-color: #f2dede;
+    color: #a94442;
+}
+
+.tabla-producto {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+.tabla-producto td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.tabla-producto img {
+    max-width: 100%;
+    height: auto;
 }
