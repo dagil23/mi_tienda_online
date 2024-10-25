@@ -142,3 +142,45 @@ table td img {
     margin: 10px auto;
     display: block;
 }
+.eliminar_categoria {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 400px;
+    margin: 40px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.eliminar_categoria input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.eliminar_categoria button {
+    background-color: var(--nav-bar-color);
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.eliminar_categoria button:hover {
+    background-color: var(--secondaryColor);
+    color: black;
+}
+#mensaje_eliminacion {
+    border: 2px solid hsl(120, 60%, 50%); 
+    border-radius: 12px;
+    text-align: center;
+    color: hsl(120, 40%, 30%); 
+    background-color: hsl(120, 100%, 95%); 
+    padding: 10px;
+    margin: 20px auto;
+    max-width: 500px;
+}

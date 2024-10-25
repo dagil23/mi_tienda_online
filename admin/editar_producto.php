@@ -74,10 +74,7 @@ $categorias = getCategorias();
         </select>
         <label for="descripcion">Nueva Descripcion del producto</label>
         <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
-        <button type="submit">Guardar Cambios</button>
-
-        <?= var_dump($nombre_producto) ?>
-        
+        <button type="submit">Guardar Cambios</button>   
     </form>
 </body>
 </html>

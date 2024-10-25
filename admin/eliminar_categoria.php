@@ -6,7 +6,6 @@ if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
     exit;
 }
 $id_categoria = isset($_GET["id"]) ? (int)$_GET["id"] : null;
-echo gettype($id_categoria);
 $confirmar = "confirmacion";
 $mensaje = "";
     if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -25,13 +24,23 @@ $mensaje = "";
     <title>Document</title>
 </head>
 <body>
-<p>Escribe la palabra <strong>confirmacion</strong>  para eliminar la categoria</p>
-        <legend>Eliminar Categoria</legend>
-        <form action="<?= $_SERVER["PHP_SELF"]  . "?id=" . $_GET["id"] ?>" method="post">
-        <label for="confirmacion"></label>
-        <input type="text" name="confirmacion" id="confirmacion">
-        <button type="submit">Eliminar</button>
-        </form>
-        <?=$mensaje?>
+    <header>
+        <nav>
+            <ul>
+                <li> <a href="../admin/index.php">Inicio</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="eliminar_categoria">
+    <p>Escribe la palabra <strong>confirmacion</strong>  para eliminar la categoria</p>
+    <form action="<?= $_SERVER["PHP_SELF"]  . "?id=" . $_GET["id"] ?>" method="post">
+    <label for="confirmacion"></label>
+    <input type="text" name="confirmacion" id="confirmacion">
+    <button type="submit">Eliminar</button>
+    </form>
+    <?php if(!empty($mensaje)):?>
+        <p id="mensaje_eliminacion"><?=$mensaje?></p>
+        <?php endif;?>
+</div>
 </body>
 </html>

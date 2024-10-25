@@ -56,9 +56,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Categorias</title>
 </head>
 <body>
-    <header>
-        <nav>
+<header>
+        <nav class="barra-navegacion">
             <ul>
+                <li><a href="../admin/index.php">Inicio</a></li>
                 <li><a href="?action=add">Agregar</a></li>
                 <li><a href="?action=edit">Modificar</a></li>
                 <li><a href="?action=delete">Eliminar</a></li>
@@ -100,6 +101,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th>Nombre</th>
                     <th>Id</th>
                     <th>Imagen</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+
                 </tr>
             </thead>
             <tbody>

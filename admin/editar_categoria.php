@@ -7,8 +7,6 @@ if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
 }
 $id_categoria = isset($_GET["id"]) ? $_GET["id"] :  null;
 $categorias = getCategorias($id_categoria);
-echo var_dump($categorias);
-echo var_dump($_FILES["imagen"]);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $nombre = !empty($_POST["nombre"]) ? $_POST["nombre"] : $categorias["nombre"];
@@ -42,6 +40,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+   <header>
+    <nav>
+        <ul>
+            <li><a href="../admin/index.php">Inicio</a></li>
+            <li> <a href="../admin/categorias.php">Categorias</a></li>
+        </ul>
+    </nav>
+   </header>
     <h1>Editar Categoría</h1>
     <form action="" method="post" enctype="multipart/form-data">
         <label for="nombre">Nombre</label>

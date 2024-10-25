@@ -2,21 +2,15 @@ DROP DATABASE IF EXISTS mitiendaDB;
 CREATE DATABASE IF NOT EXISTS mitiendaDB;
 USE mitiendaDB;
 
-CREATE TABLE IF NOT EXISTS USUARIOS(
+-- Inserciones de usuarios en la tabla USUARIOS
 
-    id_usuario INTEGER AUTO_INCREMENT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    apellido VARCHAR(100) NOT NULL,
-    email VARCHAR(100) UNIQUE KEY,
-    dni VARCHAR(9) UNIQUE KEY,
-    fecha_registro DATE DEFAULT CURDATE(),
-    contraseña  VARCHAR(100) NOT NULL,
-    direccion VARCHAR(255) NOT NULL,
-    telefono VARCHAR(100) NOT NULL,
-    rol ENUM("admin", "user") NOT NULL DEFAULT "user"
-    
+INSERT INTO USUARIOS (nombre, apellido, email, dni, contraseña, direccion, telefono, rol) VALUES
+('Daniel', 'Martínez', 'daniel.example@example.com', '12345678A', 'password1', 'Calle Falsa 123', '123456789', 'user'),
+('Laura', 'González', 'laura.gonzalez@example.com', '87654321B', 'password2', 'Avenida Siempre Viva 456', '987654321', 'user'),
+('Pedro', 'López', 'pedro.lopez@example.com', '23456789C', 'password3', 'Calle Verde 789', '111222333', 'user'),
+('Ana', 'Sánchez', 'ana.sanchez@example.com', '34567890D', 'password4', 'Calle Azul 321', '444555666', 'user'),
+('Carlos', 'Ramírez', 'carlos.ramirez@example.com', '45678901E', 'password5', 'Avenida del Sol 654', '777888999', 'user');
 
-);
 CREATE TABLE IF NOT EXISTS PEDIDOS(
 
     id_pedido INTEGER AUTO_INCREMENT PRIMARY KEY,

@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if (empty($error)) {   //Si no encontramos ningun error introducimos el producto
         $imagen = $_FILES["imagen"]["name"];
-        $pathImages = "../assets/images" . basename($imagen);
+        $pathImages = "../assets/images/" . basename($imagen);
         move_uploaded_file($_FILES["imagen"]["tmp_name"], $pathImages);
 
         $id_categoria = (int)$_POST["categoria"];
@@ -67,7 +67,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
     <header>
-        <h1>Productos</h1>
         <nav class="barra-navegacion">
             <ul>
                 <li><a href="../admin/index.php">Inicio</a></li>
@@ -77,6 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </ul>
         </nav>
     </header>
+    <h1>Productos</h1>
     
     <?php if($action == 'add'): ?>
     <form action="" method="post" enctype="multipart/form-data" class="formulario-producto">
@@ -121,7 +121,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php endif; ?>
     </form>
     
-    <?php elseif ($action == "edit"): ?>
+    <?php elseif ($action == "edit" || $action == "delete"): ?>
         <h1>Editar</h1>
         <?php foreach($productos as $producto):?>
         <table border="1" cellpadding="10" class="tabla-producto">
@@ -135,6 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td>Descripcion</td>
                 <td>Nombre</td>
                 <td>Cantidad en Stock</td>
+                <td>Editar</td>
+                <td>Eliminar</td>
             </tr>
             <tr>
                 <td><?= $producto["id_producto"];?></td>
@@ -145,37 +147,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td><?= $producto["descripcion"]; ?></td>
                 <td><?= $producto["nombre_producto"]; ?></td>
                 <td><?= $producto["cantidad_stock"]; ?></td>
-                <td><a href="editar_producto.php?id=<?=$producto["id_producto"]?>">Editar</a></td>
-            </tr>
-        </tbody>
-        </table>
-        <?php endforeach; ?>
-    
-    <?php elseif ($action == "delete"): ?>
-        <h1>Eliminar</h1>
-        <?php foreach($productos as $producto):?>
-        <table border="1" cellpadding="10" class="tabla-producto">
-        <tbody>
-            <tr>
-                <td>Id producto</td>
-                <td>Id Categoria</td>
-                <td>Precio</td>
-                <td>Color</td>
-                <td>Imagen</td> 
-                <td>Descripcion</td>
-                <td>Nombre</td>
-                <td>Cantidad en Stock</td>
-            </tr>
-            <tr>
-                <td><?= $producto["id_producto"];?></td>
-                <td><?= $producto["id_categoria"]; ?></td>
-                <td><?= $producto["precio"]; ?></td>
-                <td><?= $producto["color"]; ?></td>
-                <td><img src="../assets/images/<?= $producto["imagen"]; ?>" width="200" alt="Imagen del Producto"></td>
-                <td><?= $producto["descripcion"]; ?></td>
-                <td><?= $producto["nombre_producto"]; ?></td>
-                <td><?= $producto["cantidad_stock"]; ?></td>
-                <td><a href="eliminar_producto.php?id=<?=$producto["id_producto"]?>">Eliminar</a></td>
+                <td><a href="editar_producto.php?id=<?=$producto["id_producto"]?>" class="btn">Editar</a></td>
+                <td><a href="eliminar_producto.php?id=<?=$producto["id_producto"]?>" class="btn">Eliminar</a></td>
+
             </tr>
         </tbody>
         </table>

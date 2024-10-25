@@ -3,7 +3,6 @@ include '../config/database.php';
 include '../includes/funciones.php';
 include '../includes/header.php';
 session_start();
-
 $productos = null;
 $categorias = getCategorias();
 $colores = getColors();
@@ -71,16 +70,12 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
                         <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
                         <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
                         <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
-                        <button>Add to Cart</button>
-                        <button>Add to Wishlist</button>
+                        <button><a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>">Add to Cart</a></button>
+                        <button><a href="../public/agregar_carrito.php">Add to Wishlist</a></button>
                     </div>
                 <?php endwhile; ?>
             <?php elseif (isset($_GET["busqueda"])): ?>
                 <p>No se encontraron productos con el término de búsqueda</p>
-                <?= var_dump($_GET["busqueda"]) ."<br>" ?>
-                <?= print_r($productos) ?>
-
-
             <?php else: ?>
                 <p>Bienvenido a Clarity</p>
                 <h2>Productos destacados</h2>

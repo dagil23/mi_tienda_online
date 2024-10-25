@@ -1,5 +1,65 @@
 @import url(../css/colors-and-fonts.css);
 
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--primaryColor);
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: var(--nav-bar-color);
+    padding: 10px;
+    box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, 0.4);
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: hsl(0, 0%, 35%);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--nav-bar-color);
+    font-family: var(--titlesLetters);
+}
+
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    color: white
+}
 
 body {
     font-family: Arial, sans-serif;
@@ -11,63 +71,161 @@ body {
 
 header {
     background-color: var(--nav-bar-color);
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 10px;
+    box-shadow: 0px 4px 2px -2px rgba(0, 0, 0, 0.4);
 }
 
-header h1 {
-    font-family: var(--titlesLetters);
-    margin: 0;
-}
-
-.barra-navegacion ul {
+nav ul {
     list-style: none;
     display: flex;
     gap: 15px;
     padding: 0;
+    margin: 0;
 }
 
-.barra-navegacion a {
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
     color: #fff;
     text-decoration: none;
-    padding: 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
     transition: background-color 0.3s;
 }
 
-.barra-navegacion a:hover {
-    background-color: var(--secondaryColor);
-    border-radius: 5px;
+nav ul li a:hover {
+    background-color: hsl(0, 0%, 35%);
 }
 
-.formulario-producto {
+h1 {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--nav-bar-color);
+    font-family: var(--titlesLetters);
+}
+
+form input[type="text"],
+form textarea,
+form select,
+form input[type="number"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid hsl(0, 0%, 50%);
+    margin-bottom: 15px;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+form input[type="text"]:focus,
+form textarea:focus,
+form select:focus,
+form input[type="number"]:focus,
+form input[type="file"]:focus {
+    border-color: var(--secondaryColor);
+    outline: none;
+    background-color: #fff;
+}
+
+table {
+    width: 90%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    background-color: hsl(0, 0%, 35%);
+    color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+table th, table td {
+    padding: 12px;
+    border: 1px solid #444;
+    text-align: center;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #f1f1f1;
+}
+
+table th {
+    background-color: hsl(0, 0%, 20%);
+    color: #fff;
+    font-weight: bold;
+    border-bottom: 2px solid var(--primaryColor);
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+.btn-producto {
+    background-color: var(--secondaryColor);
+    color: #333;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-decoration: none;
+}
+.btn-producto:hover {
+    background-color: hsl(60, 100%, 65%);
+}
+.btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #333;
+    background-color: var(--secondaryColor);
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: hsl(60, 100%, 65%);
+}
+
+/* Ajuste de imagen en tabla para que sea consistente */
+table td img {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    background-color: #fff;
+    padding: 0;
+    border: 2px solid var(--secondaryColor);
+    margin: 10px auto;
+    display: block;
+}
+.eliminar_producto {
     background-color: #fff;
     padding: 20px;
     border-radius: 8px;
-    max-width: 600px;
-    margin: 20px auto;
+    max-width: 400px;
+    margin: 40px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
-.formulario-producto label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-.input-producto,
-.select-producto,
-.textarea-producto {
-    width: 100%;
+.eliminar_producto input[type="text"] {
+    width: 80%;
     padding: 10px;
-    margin-bottom: 15px;
+    margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.btn-producto {
+.eliminar_producto button {
     background-color: var(--nav-bar-color);
     color: #fff;
     padding: 10px 20px;
@@ -77,17 +235,23 @@ header h1 {
     transition: background-color 0.3s;
 }
 
-.btn-producto:hover {
+.eliminar_producto button:hover {
     background-color: var(--secondaryColor);
+    color: black;
 }
 
-.mensaje-exito,
-.mensaje-error {
-    max-width: 600px;
+#mensaje_eliminacion {
+    border: 2px solid hsl(120, 60%, 50%); 
+    border-radius: 12px;
+    text-align: center;
+    color: hsl(120, 40%, 30%); 
+    background-color: hsl(120, 100%, 95%); 
+    padding: 10px;
     margin: 20px auto;
-    padding: 15px;
-    border-radius: 8px;
+    max-width: 500px;
 }
+
+
 
 .mensaje-exito {
     background-color: #dff0d8;
@@ -97,21 +261,4 @@ header h1 {
 .mensaje-error {
     background-color: #f2dede;
     color: #a94442;
-}
-
-.tabla-producto {
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-    border-collapse: collapse;
-}
-
-.tabla-producto td {
-    padding: 10px;
-    border: 1px solid #ccc;
-}
-
-.tabla-producto img {
-    max-width: 100%;
-    height: auto;
 }
