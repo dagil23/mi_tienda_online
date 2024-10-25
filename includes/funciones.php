@@ -469,7 +469,9 @@ function addProduct($id_categoria, $nombre, $precio, $color, $descripcion, $imag
     $conexion->close();
     $stmt->close();
 }
-
+function addLineaPedido(){
+    
+}
 function addPedido($id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$estado,$direccion){
 
     $conexion = connectDB();
@@ -482,7 +484,6 @@ function addPedido($id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$es
         return true;
     }else{
         return false;
-        $stmt->error;
     }
     $conexion->close();
     $stmt->close();

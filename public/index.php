@@ -6,7 +6,6 @@ session_start();
 $productos = null;
 $categorias = getCategorias();
 $colores = getColors();
-
 if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["color"]) || isset($_GET["precio_min"]) || isset($_GET["precio_max"])) {
     $terminoBusqueda = !empty($_GET["busqueda"]) ? $_GET["busqueda"] : null;
     $tipo_prenda = !empty($_GET["tipo_prenda"]) ? $_GET["tipo_prenda"] : null;
@@ -70,8 +69,8 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
                         <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
                         <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
                         <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
-                        <button><a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>">Add to Cart</a></button>
-                        <button><a href="../public/agregar_carrito.php">Add to Wishlist</a></button>
+                        <a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>" class="btn">Add to Cart</a>
+                        <a href="../public/agregar_carrito.php"  class="btn">Add to Wishlist</a>
                     </div>
                 <?php endwhile; ?>
             <?php elseif (isset($_GET["busqueda"])): ?>
