@@ -2,6 +2,10 @@
 include '../config/database.php';
 include '../includes/funciones.php';
 session_start();
+if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
+    header("Location: ../public/index.php");
+    exit;
+}
 $productos = getProductos();
 $categorias = getCategorias();
 $mensaje = array();
