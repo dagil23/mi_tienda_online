@@ -1,6 +1,10 @@
 <?php
 include '../config/database.php';
 include '../includes/funciones.php';
+if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
+    header("Location: ../public/index.php");
+    exit;
+}
 session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : 'add';
 $categorias = getCategorias();

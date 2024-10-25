@@ -1,5 +1,10 @@
 <?php
+session_start();
 include '../includes/funciones.php';
+if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
+    header("Location: ../public/index.php");
+    exit;
+}
 $id_categoria = isset($_GET["id"]) ? (int)$_GET["id"] : null;
 $confirmar = "confirmacion";
 $mensaje = "";

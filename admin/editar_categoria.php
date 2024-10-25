@@ -1,5 +1,10 @@
 <?php
 include '../includes/funciones.php';
+session_start();
+if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
+    header("Location: ../public/index.php");
+    exit;
+}
 $id_categoria = isset($_GET["id"]) ? $_GET["id"] :  null;
 $categorias = getCategorias($id_categoria);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
