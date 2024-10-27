@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS PEDIDOS(
     precio_total DECIMAL(10,2) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellidos VARCHAR(100) NOT NULL,
-    tallas_disponibles SET ("S","M","L","XXL") NOT NULL,
     fecha_pedido DATE DEFAULT CURDATE(),
     estado ENUM("entregado","pendiente","procesado","enviado","carrito") NOT NULL,
     direccion VARCHAR(255) NOT NULL,
@@ -68,10 +67,11 @@ CREATE TABLE IF NOT EXISTS RESEÑAS(
     contenido VARCHAR(255) NOT NULL,
     FOREIGN KEY (id_usuario) REFERENCES USUARIOS (id_usuario)
 );
-CREATE TABLE IF NOT EXISTS LENEA_PEDIDO(
+CREATE TABLE IF NOT EXISTS LINEA_PEDIDO(
     id_linea_pedido INTEGER AUTO_INCREMENT PRIMARY KEY,
     id_pedido INTEGER NOT NULL,
     id_producto INTEGER NOT NULL,
+    talla SET ("S","M","L","XXL") NOT NULL,
     precio_unitario DECIMAL (10,2) NOT NULL,
     cantidad INT NOT NULL,
     FOREIGN KEY (id_pedido) REFERENCES PEDIDOS (id_pedido),
@@ -95,12 +95,6 @@ INSERT INTO USUARIOS (nombre, apellido, email, dni, contraseña, direccion, tele
 ('Ana', 'Sánchez', 'ana@example.com', '34567890D','contraseñaSegura4', 'Calle Azul 321', '321654987', 'user'),
 ('Carlos', 'Ramírez', 'carlos@example.com', '45678901E','contraseñaSegura5', 'Avenida del Sol 654', '654321987', 'user');
 
-INSERT INTO PEDIDOS (pedido_usuario, dni, precio_total, nombre, apellidos, tallas_disponibles, estado, direccion) VALUES
-(1, '12345678A', 49.99, 'Daniel', 'Martínez', 'M', 'entregado', 'Calle Falsa 123'),
-(2, '87654321B', 29.99, 'Laura', 'González', 'S', 'pendiente', 'Avenida Siempre Viva 456'),
-(3, '23456789C', 89.99, 'Pedro', 'López', 'L', 'procesado', 'Calle Verde 789'),
-(4, '34567890D', 59.99, 'Ana', 'Sánchez', 'XXL', 'enviado', 'Calle Azul 321'),
-(5, '45678901E', 39.99, 'Carlos', 'Ramírez', 'M', 'carrito', 'Avenida del Sol 654');
 
 INSERT INTO CATEGORIA (nombre, descripcion, imagen) VALUES
 ('Camisetas', 'Ropa de vestir para la parte superior del cuerpo, generalmente casual.', 'camisa.png'),
@@ -113,13 +107,6 @@ INSERT INTO CATEGORIA (nombre, descripcion, imagen) VALUES
 ('Guantes', 'Prendas que cubren las manos y protegen contra el frío.', 'guantes.png'),
 ('Zapatos', 'Calzado para proteger los pies y proporcionar confort.', 'zapatos.png');
 
-
-INSERT INTO WISHLIST (id_usuario, nombre) VALUES
-(1, 'Wishlist de Daniel'),
-(2, 'Wishlist de Laura'),
-(3, 'Wishlist de Pedro'),
-(4, 'Wishlist de Ana'),
-(5, 'Wishlist de Carlos');
 
 
 INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
@@ -143,25 +130,5 @@ INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_p
 (7, 29.99, 'Blanco', 'polo-blanco.png', 'Polo blanco de algodón', 'Polo Blanco', 35);
 
 
-INSERT INTO RESEÑAS (id_usuario, calificacion, contenido) VALUES
-(1, '5 estrellas', 'Excelente producto, me encantó.'),
-(2, '4 estrellas', 'Buena calidad, pero el tamaño no era el correcto.'),
-(3, '5 estrellas', 'Me llegó rápido y en perfectas condiciones.'),
-(4, '3 estrellas', 'El diseño es bonito, pero no es muy cómodo.'),
-(5, '4 estrellas', 'Rápido y eficiente, volveré a comprar.');
-
-INSERT INTO LENEA_PEDIDO (id_pedido, id_producto, precio_unitario, cantidad) VALUES
-(1, 1, 29.99, 1),
-(2, 2, 39.99, 1),
-(3, 4, 49.99, 2),
-(4, 3, 15.99, 1),
-(5, 5, 25.99, 1);
-
-INSERT INTO WISHLIST_PRODUCT (id_producto, id_wishlist) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 3),
-(5, 4);
 
 

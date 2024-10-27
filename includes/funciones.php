@@ -48,7 +48,7 @@ function verifyImage($archivo, $tiposPermitidos = ["image/png", "image/jpeg"])
     if (!empty($archivo)) {
         $tipoArchivo = $archivo["type"];
         if (in_array($tipoArchivo, $tiposPermitidos)) {
-                return true;
+            return true;
         }
     }
     return false;
@@ -133,13 +133,14 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
     $stmt->close();
 }
 
-function getInfoUser($email= null){
+function getInfoUser($email = null)
+{
     $conexion = connectDB();
-    if($email){
+    if ($email) {
         $query = " SELECT * FROM USUARIOS WHERE email = ? ";
         $stmt = $conexion->prepare($query);
-        $stmt->bind_param("s",$email);
-    }else{
+        $stmt->bind_param("s", $email);
+    } else {
         $query = " SELECT * FROM USUARIOS ORDER BY id_usuario ASC ";
         $stmt = $conexion->prepare($query);
     }
@@ -148,9 +149,9 @@ function getInfoUser($email= null){
     $usuarios = array();
     $result = $stmt->get_result();
 
-    if($result && $result->num_rows > 0){
-        while($row = $result->fetch_assoc()){
-            $usuarios [] = [
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = [
                 'id_usuario' => $row['id_usuario'],
                 'nombre' => $row['nombre'],
                 'apellido' => $row['apellido'],
@@ -167,8 +168,6 @@ function getInfoUser($email= null){
         $conexion->close();
         $stmt->close();
     }
-
-
 }
 function getProductos($id_producto = null)
 {
@@ -321,7 +320,7 @@ function addCategoria($nombre, $descripcion, $imagen)
     if ($stmt === false) {
         die("Error en la preparacion de la consulta" . $conexion->error);
     }
-    $stmt->bind_param("sss", $nombre,$descripcion,$imagen);
+    $stmt->bind_param("sss", $nombre, $descripcion, $imagen);
     if ($stmt->execute()) {
         return "Categoria agregadoa con exito";
     } else {
@@ -418,10 +417,11 @@ function updateCategoria($id_categoria, $nombre, $descripcion, $imagen)
     $stmt->close();
 }
 
-function deleteCategoria($id_categoria) {
+function deleteCategoria($id_categoria)
+{
     $conexion = connectDB();
     $query = "DELETE FROM CATEGORIA WHERE id_categoria = ?";
-    
+
     $stmt = $conexion->prepare($query);
     if (!$stmt) {
         die("Error al preparar la consulta: " . $conexion->error);
@@ -469,17 +469,103 @@ function addProduct($id_categoria, $nombre, $precio, $color, $descripcion, $imag
     $conexion->close();
     $stmt->close();
 }
-function addLineaPedido(){
-    
-}
-function addPedido($id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$estado,$direccion){
+
+function existsOrderCart($id_usuario)
+{
 
     $conexion = connectDB();
-    $stmt =$conexion->prepare("INSERT INTO PEDIDOS(pedido_usuario,dni, precio_total,nombre,apellidos,tallas_disponibles,estado,direccion) VALUES(?, ?, ?, ?, ?, ?, ?, ?) ");
-    if(!$stmt){
+    $id_pedido = null;
+    $query = "SELECT id_pedido FROM PEDIDOS WHERE pedido_usuario = ? AND estado = 'carrito' ";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("i", $id_usuario);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if($result->num_rows>0){
+        $row = $result->fetch_assoc();
+        $id_pedido = $row["id_pedido"];
+    }
+    return $id_pedido ? $id_pedido : false;
+    $conexion->close();
+    $stmt->close();
+    
+}
+
+function addOrder($id_usuario, $dni, $precio_total, $nombre, $apellidos, $estado, $direccion)
+{
+
+    $conexion = connectDB();
+    $stmt = $conexion->prepare("INSERT INTO PEDIDOS(pedido_usuario,dni, precio_total,nombre,apellidos,estado,direccion) VALUES(?, ?, ?, ?, ?, ?, ?) ");
+    if (!$stmt) {
         die("Error en la preparacion de la consulta " . $conexion->error);
     }
-    $stmt->bind_param("isdsssss",$id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$estado,$direccion);
+    $stmt->bind_param("isdssss", $id_usuario, $dni, $precio_total, $nombre, $apellidos, $estado, $direccion);
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        return false;
+    }
+    $conexion->close();
+    $stmt->close();
+}
+
+function updateOrder($id_pedido, $precio_total = null, $estado = null, $direccion = null)
+{
+
+    $conexion = connectDB();
+
+    $query = "UPDATE PEDIDOS SET";
+    $params = array();
+    $types = "";
+
+    if (!empty($precio_total)) {
+        $query .= " precio_total = ?, ";
+        $params[] = $precio_total;
+        $types .= "d";
+    }
+
+    if (!empty($estado)) {
+
+        $query .= " estado = ?, ";
+        $params [] = $estado;
+        $types .= "s";
+    }
+
+    if(!empty($direccion)){
+
+        $query .= " direccion = ?, ";
+        $params [] = $direccion;
+        $types .= "s";
+    }
+
+    $query = rtrim($query, ", ") . " WHERE id_pedido = ?";
+    $params [] = $id_pedido;
+    $types .= "i";
+
+    if(!empty($params)){
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param($types,...$params);
+    }
+    $result = $stmt->execute();
+    $stmt->close();
+    $conexion->close();
+    return $result;
+
+
+    
+}
+
+function addOrderLine($id_pedido, $id_producto,$talla, $precio_unitario, $cantidad){
+
+    $conexion = connectDB();
+    $stmt = $conexion->prepare("INSERT INTO LINEA_PEDIDO(id_pedido,id_producto,talla,precio_unitario,cantidad) VALUES(?, ?, ?, ?, ?)");
+
+    if(!$stmt){
+        die("Error al preparar la consulta" . $conexion->error);
+    }
+
+    $stmt->bind_param("iisdi",$id_pedido, $id_producto,$talla, $precio_unitario, $cantidad);
     if($stmt->execute()){
         return true;
     }else{
@@ -487,6 +573,50 @@ function addPedido($id_usuario,$dni,$precio_total,$nombre,$apellidos,$tallas,$es
     }
     $conexion->close();
     $stmt->close();
+}
 
+function updateOrderLine($id_linea_pedido,$cantidad){
+    $conexion = connectDB();
+    $query = "UPDATE LINEA_PEDIDO SET cantidad = ? ";
+    $stmt = $conexion->prepare($query);
 
+    if(!$stmt){
+        die("Error al preparar la consulta" . $conexion->error);
+    }
+
+    $stmt->bind_param("ii",$id_linea_pedido,$cantidad);
+
+    if($stmt->execute()){
+        return true;
+    }else{
+        return false;
+    }
+    $conexion->close();
+    $stmt->close();
+}
+
+function getOrderLineId($id_pedido, $id_producto){
+
+    $conexion = connectDB();
+    $id_linea_pedido = null;
+    $query = "SELECT id_linea_pedido WHERE id_pedido = ? AND id_producto = ?";
+    $stmt = $conexion->prepare($query);
+    
+    if(!$stmt){
+        die("Error al preparar la consulta" . $conexion->error);
+    }
+
+    $stmt->bind_param("ii",$id_pedido, $id_producto);
+
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $id_linea_pedido = $row["id_linea_pedido"];
+    }
+
+    $conexion->close();
+    $stmt->close();
+
+    return $id_linea_pedido;
 }
