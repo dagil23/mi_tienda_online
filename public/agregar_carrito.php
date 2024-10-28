@@ -1,23 +1,27 @@
 <?php 
+
 session_start();
 include '../includes/funciones.php';
 include '../includes/header.php';
-$id_prodcuto = isset($_GET["id"]) ? $_GET["id"] : null;
+$id_producto = isset($_GET["id"]) ? $_GET["id"] : null;
 $errores = array();
 $users = getInfoUser($_SESSION["email"]);
 $tallas = ["S","M","L","XXL"];
-$producto = getProductos($id_prodcuto);
+$producto = getProductos($id_producto);
 
 if(isset($_SESSION["email"])){
+    echo "hverificacion iniciada";
+
 $user = getInfoUser($_SESSION["email"]);
 $id_pedido = existsOrderCart($user["id_usuario"]);
     if($_SERVER["REQUEST_METHOD"] == "POST"){
-        $cantidad = isset($_POST["cantidad"]) ? $_POST["cantidad"] : 0;
+        echo "entrando a post";
+
+        $cantidad = isset($_POST["cantidad"]) ? intval($_POST["cantidad"]) : 0;
         $talla = isset($_POST["talla"]) ? $_POST["talla"] : "";
-        echo $cantidad;
         if($cantidad > $producto["cantidad_stock"]){
             $errores [] = "¡Ups! Solo nos quedan " . $producto["cantidad_stock"] ." en stock. Por favor, ajusta tu cantidad";
-            exit;
+           exit;
         }
         $id_usuario = $user["id_usuario"];
         $dni = $user["dni"];
@@ -26,17 +30,32 @@ $id_pedido = existsOrderCart($user["id_usuario"]);
         $apellidos = $user["apellido"];
         $estado = "carrito";
         $direccion = $user["direccion"];
+
         if($id_pedido){
+            echo $id_pedido;
             // updateOrder($id_pedido,$precio_total,$estado,$direccion);
-            updateOrderLine(getOrderLineId($id_pedido,$producto["id_producto"]),$cantidad);
-        }else{
-            addOrder($id_usuario,$dni,$precio_total,$nombre,$apellidos,$estado,$direccion);
-            addOrderLine($id_pedido,$producto["id_producto"],$talla,$producto["precio"],$cantidad);
-        }
+            $id_linea_pedido = getOrderLineId($id_pedido,$producto["id_producto"]);
+            if($id_linea_pedido){
+
+                echo var_dump($id_linea_pedido);
+                echo var_dump($cantidad);
+                updateOrderLine($id_linea_pedido,$cantidad);
+            }else{
+                addOrderLine($id_pedido,$id_producto,$talla,$precio,$cantidad);
+            }
+         
+    }else{
+        echo "hola";
+        echo var_dump($id_pedido);
+        $id_pedido =  addOrder($id_usuario,$dni,$precio_total,$nombre,$apellidos,$estado,$direccion);
+        addOrderLine($id_pedido,$producto["id_producto"],$talla,$producto["precio"],$cantidad);
     }
+}
+
 }else{
     header("Location: ../public/index.php");
 }
+
 
 ?>
 
@@ -67,7 +86,7 @@ $id_pedido = existsOrderCart($user["id_usuario"]);
         <label for="cantidad">Cantidad</label>
         <input type="number" step="1" name="cantidad" max = "<?=$producto["cantidad_stock"]?>">
     </div>
-    <button type="submit">Agregar</></button>
+    <button type="submit">Agregar</button>
     </form>
     </div>
     <?php if(!empty($errores)):?>

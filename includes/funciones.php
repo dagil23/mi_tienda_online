@@ -404,12 +404,9 @@ function updateCategoria($id_categoria, $nombre, $descripcion, $imagen)
     }
 
     if ($stmt->execute()) {
-        $stmt->close();
-        $conexion->close();
+        
         return true;
     } else {
-        $stmt->close();
-        $conexion->close();
         die("Error al ejecutar la consulta: " . $stmt->error);
     }
 
@@ -501,13 +498,12 @@ function addOrder($id_usuario, $dni, $precio_total, $nombre, $apellidos, $estado
         die("Error en la preparacion de la consulta " . $conexion->error);
     }
     $stmt->bind_param("isdssss", $id_usuario, $dni, $precio_total, $nombre, $apellidos, $estado, $direccion);
-    if ($stmt->execute()) {
-        return true;
-    } else {
-        return false;
-    }
-    $conexion->close();
+    $stmt->execute();
+    $id_pedido = $stmt->insert_id;
+    
     $stmt->close();
+    $conexion->close();
+    return $id_pedido;
 }
 
 function updateOrder($id_pedido, $precio_total = null, $estado = null, $direccion = null)
@@ -599,7 +595,7 @@ function getOrderLineId($id_pedido, $id_producto){
 
     $conexion = connectDB();
     $id_linea_pedido = null;
-    $query = "SELECT id_linea_pedido WHERE id_pedido = ? AND id_producto = ?";
+    $query = "SELECT id_linea_pedido  FROM LINEA_PEDIDO WHERE id_pedido = ? AND id_producto = ?";
     $stmt = $conexion->prepare($query);
     
     if(!$stmt){
