@@ -573,14 +573,14 @@ function addOrderLine($id_pedido, $id_producto,$talla, $precio_unitario, $cantid
 
 function updateOrderLine($id_linea_pedido,$cantidad){
     $conexion = connectDB();
-    $query = "UPDATE LINEA_PEDIDO SET cantidad = ? ";
+    $query = "UPDATE LINEA_PEDIDO SET cantidad = ? WHERE id_linea_pedido = ? ";
     $stmt = $conexion->prepare($query);
 
     if(!$stmt){
         die("Error al preparar la consulta" . $conexion->error);
     }
 
-    $stmt->bind_param("ii",$id_linea_pedido,$cantidad);
+    $stmt->bind_param("ii",$cantidad,$id_linea_pedido);
 
     if($stmt->execute()){
         return true;
@@ -590,7 +590,25 @@ function updateOrderLine($id_linea_pedido,$cantidad){
     $conexion->close();
     $stmt->close();
 }
+function deleteOrderLine($id_linea_pedido){
 
+    $conexion = connectDB();
+    $query = "DELETE FROM LINEA_PEDIDO WHERE linea_pedido.id_linea_pedido = ?";
+    $stmt = $conexion->prepare($query);
+
+    if(!$stmt){
+        die("Error al preparar la consulta" . $conexion->error);
+    }
+
+    $stmt->bind_param("i",$id_linea_pedido);
+    if($stmt->execute()){
+
+        return "Se ha eliminado del carrito";
+    }
+    $stmt->close();
+    $conexion->close();
+
+}
 function getOrderLineId($id_pedido, $id_producto){
 
     $conexion = connectDB();
@@ -615,4 +633,65 @@ function getOrderLineId($id_pedido, $id_producto){
     $stmt->close();
 
     return $id_linea_pedido;
+}
+
+function getUserOrders($id_pedido){
+
+    $conexion = connectDB();
+
+    $query = "SELECT talla, precio_unitario, cantidad,imagen,producto.id_producto
+	FROM LINEA_PEDIDO INNER JOIN pedidos
+    ON linea_pedido.id_pedido = pedidos.id_pedido 
+    INNER JOIN producto ON linea_pedido.id_producto = producto.id_producto
+    WHERE pedidos.id_pedido = ?";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("i",$id_pedido);
+    $stmt->execute();
+
+    if(!$stmt){
+        die("Error al preparar la consulta " . $conexion->error);
+    }
+    $result = $stmt->get_result();
+    $orders = array();
+
+    if($result->num_rows > 0){
+        while($row = $result->fetch_assoc()){
+            $orders [] = [
+                "talla" => $row["talla"],
+                "precio_unitario" => $row["precio_unitario"],
+                "cantidad" => $row["cantidad"],
+                "imagen" => $row["imagen"],
+                "id_producto" => $row["id_producto"],
+            ];
+        }
+    }
+    return $orders;
+    $stmt->close();
+    $conexion->close();
+
+}
+function sumOrdersUser ($id_pedido){
+
+        $conexion = connectDB();
+        $query = "SELECT SUM(cantidad * precio_unitario) AS total
+                    FROM linea_pedido WHERE id_pedido = ?";
+        $stmt = $conexion->prepare($query);
+
+        if(!$stmt){
+            die("Error al ejecutar la consulta" . $conexion->error);
+        }
+        $stmt->bind_param("i",$id_pedido);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $total = null;
+
+        if($result->num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $total = $row["total"];
+            }
+        }
+
+        return $total ? $total : 0;
+        
+
 }

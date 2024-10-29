@@ -8,54 +8,26 @@ $errores = array();
 $users = getInfoUser($_SESSION["email"]);
 $tallas = ["S","M","L","XXL"];
 $producto = getProductos($id_producto);
+echo $_SESSION["email"];
+if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
+    $user = getInfoUser($_SESSION["email"]);//Obtenemos toda la informacion de nuestro usuario
+    $id_pedido = existsOrderCart($user["id_usuario"]);//Si el usuario tiene un pedido en estado carrito lo obtemos mediante la funcion 
+    $_SESSION["id_pedido"] = $id_pedido; // Guardamos el id del pedido para poder usarlo en otras paginas
+    if($_SERVER["REQUEST_METHOD"] == "POST"){ // Verificamos si recibimos peticiones mediante post
+        $precio_total = $_POST["cantidad"] * $producto["precio"];
+        $talla = $_POST["talla"];
+        if($id_pedido){ // Si existe el pedido en estado carrito, agregamos una nueva linea de pedido relacionada con el pedido del usuario 
 
-if(isset($_SESSION["email"])){
-    echo "hverificacion iniciada";
-
-$user = getInfoUser($_SESSION["email"]);
-$id_pedido = existsOrderCart($user["id_usuario"]);
-    if($_SERVER["REQUEST_METHOD"] == "POST"){
-        echo "entrando a post";
-
-        $cantidad = isset($_POST["cantidad"]) ? intval($_POST["cantidad"]) : 0;
-        $talla = isset($_POST["talla"]) ? $_POST["talla"] : "";
-        if($cantidad > $producto["cantidad_stock"]){
-            $errores [] = "¡Ups! Solo nos quedan " . $producto["cantidad_stock"] ." en stock. Por favor, ajusta tu cantidad";
-           exit;
+            addOrderLine($id_pedido,$id_producto,$talla,$producto["precio"],$_POST["cantidad"]); // Creamos una nueva linea de pedido, relacionada con el mismo pedido que ya tenia el usuario 
+        }else {
+            //Si no existe el pedido creamos uno nuevo en estado carrito
+            $id_pedido_nuevo = addOrder($user["id_usuario"],$user["dni"],$precio_total,$user["nombre"],$user["apellido"],"carrito",$user["direccion"]);
+            addOrderLine($id_pedido_nuevo,$id_producto,$talla,$producto["precio"],$_POST["cantidad"]);
         }
-        $id_usuario = $user["id_usuario"];
-        $dni = $user["dni"];
-        $precio_total = $producto["precio"] * $cantidad;
-        $nombre = $user["nombre"];
-        $apellidos = $user["apellido"];
-        $estado = "carrito";
-        $direccion = $user["direccion"];
-
-        if($id_pedido){
-            echo $id_pedido;
-            // updateOrder($id_pedido,$precio_total,$estado,$direccion);
-            $id_linea_pedido = getOrderLineId($id_pedido,$producto["id_producto"]);
-            if($id_linea_pedido){
-
-                echo var_dump($id_linea_pedido);
-                echo var_dump($cantidad);
-                updateOrderLine($id_linea_pedido,$cantidad);
-            }else{
-                addOrderLine($id_pedido,$id_producto,$talla,$precio,$cantidad);
-            }
-         
-    }else{
-        echo "hola";
-        echo var_dump($id_pedido);
-        $id_pedido =  addOrder($id_usuario,$dni,$precio_total,$nombre,$apellidos,$estado,$direccion);
-        addOrderLine($id_pedido,$producto["id_producto"],$talla,$producto["precio"],$cantidad);
     }
-}
-
 }else{
-    header("Location: ../public/index.php");
+    header("Location: ../public/logig.php"); //Si no tiene cuenta o no a iniciado sesion lo redirigimos al login
 }
-
 
 ?>
 
@@ -69,7 +41,7 @@ $id_pedido = existsOrderCart($user["id_usuario"]);
 <body>
     <h1>Producto para agregar al carrito</h1>
     <div class="tarjeta_producto">
-        <form action="<?= $_SERVER['PHP_SELF'] . "?id=" . $id_prodcuto ?>" method="post">
+        <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $producto["id_producto"]?>" method="post">
     <img src="../assets/images/<?=$producto["imagen"]?>"alt="imagen producto" width="300px" height="300px">
     <div class="detalles_producto">
         <h4>Nombre del Producto</h4>
@@ -85,9 +57,9 @@ $id_pedido = existsOrderCart($user["id_usuario"]);
         <p>Precio €<?=$producto["precio"]?></p>
         <label for="cantidad">Cantidad</label>
         <input type="number" step="1" name="cantidad" max = "<?=$producto["cantidad_stock"]?>">
+        <button type="submit">Agregar</button>
     </div>
-    <button type="submit">Agregar</button>
-    </form>
+</form>
     </div>
     <?php if(!empty($errores)):?>
     <?= implode(" ", $errores)?>
