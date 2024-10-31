@@ -7,6 +7,7 @@ $id_pedido = isset($_SESSION["id_pedido"]) ? (int)$_SESSION["id_pedido"] : null;
 $total = floatval(sumOrdersUser($id_pedido));
 $userOrders = getUserOrders($id_pedido); //Obtenemos las ordenes que ha realizado el usuario para luego mostralas
 $id_producto = isset($_GET["id_producto"]) ? $_GET["id_producto"] : null;
+$_SESSION["total"] = $total; //Guardamos en la sesion el total del pedido para luego enviarlo
 echo $id_producto;
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -69,7 +70,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     </table>
     <div class="total-container">
         <h2>Total a Pagar: €<?= number_format($total, 2) ?></h2>
-        <button>Finalizar pedido</button>
+        <a href="../public/checkout.php?id=<?=$id_pedido?>" class="btn">Finalizar pedido</a>
     </div>
     <?=$mensaje?>
     <?php else:?>

@@ -26,7 +26,7 @@ if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
         }
     }
 }else{
-    header("Location: ../public/logig.php"); //Si no tiene cuenta o no a iniciado sesion lo redirigimos al login
+    header("Location: ../public/login.php"); //Si no tiene cuenta o no a iniciado sesion lo redirigimos al login
 }
 
 ?>

@@ -1,0 +1,11 @@
+body{
+}
+form{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+input{
+    width: 200px;
+}

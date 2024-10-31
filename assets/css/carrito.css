@@ -67,6 +67,26 @@ td img {
     color: black;
 }
 
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--nav-bar-color); /* Usando el color específico del carrito */
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+} 
+
+.btn:hover {
+    background-color: var(--cart-button-color); /* Usando el color secundario al hacer hover */
+    color: white;
+    opacity: 0.9;
+}
+
+
 /* Responsive Design */
 @media (max-width: 600px) {
     table, th, td {
