@@ -17,6 +17,9 @@ if(isset($_SESSION["email"])){
     $direccion = $_SESSION["direccion"];
     $telefono = $_SESSION["telefono"];
     $precio_total = $_SESSION["total"];
+    if($_SERVER["REQUEST_METHOD"]== "POST"){
+        
+    }
 
 
 }
@@ -33,7 +36,7 @@ if(isset($_SESSION["email"])){
     <body>
         <form action="">
             
-        <h5>Informacion de contacto</h5>
+        <h5>Datos del pedido</h5>
         <label for="email">Email</label>
         <input type="text" id="email">
         <label for="nombre">Nombre</label>
@@ -42,15 +45,15 @@ if(isset($_SESSION["email"])){
         <input type="text" name="apellido" id="apellido">
         <label for="dni">DNI</label>
         <input type="text" id="dni" name="dni">
-        <h5>Direccion de envio</h5>
         <label for="direccion">Direccion</label>
         <input type="text" id="direccion">
+        <button type="submit">Pagar</button>
         </form>
 
         <div class="deatails-info">
             <h5>Detalles del pedido</h5>
             <?php foreach ($userOrders as $userOrder):?> 
-             <p>E</p>
+             <p> <?="fola"?>  </p>
             <?php endforeach; ?>
             <h2>Total <?=$precio_total ?></h2>
         </div>

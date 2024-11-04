@@ -695,3 +695,23 @@ function sumOrdersUser ($id_pedido){
         
 
 }
+
+function checkOrderLine($id_pedido, $id_producto,$talla){
+    $conexion = connectDB();
+    $query = "SELECT * FROM LINEA_PEDIDO WHERE linea_pedido.id_pedido = ?
+     AND linea_pedido.id_producto = ? AND talla = ? ";
+    $stmt = $conexion->prepare($query);
+
+    if(!$stmt){
+        die("Error al ejecutar la consulta " . $conexion->error);
+    }
+
+    $stmt->bind_param("iis",$id_pedido,$id_producto,$talla);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if($result->num_rows > 0){
+        return $result->fetch_assoc();
+    }else{
+        return null;
+    }
+}

@@ -49,7 +49,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <?php foreach ($userOrders as $userOrder): ?>
         <tr>
             <td><?= htmlspecialchars($userOrder["talla"]) ?></td>
-            <td>€<?= number_format($userOrder["precio_unitario"], 2) ?></td>
+            <td>€<?= number_format(($userOrder["precio_unitario"] * $userOrder["cantidad"]), 2) ?></td>
             <td>
                 <!-- Formulario para ajustar la cantidad y actualizar -->
                 <form action="<?= $_SERVER["PHP_SELF"] . "?id_producto=" . $userOrder["id_producto"] ?>" method="post" class="form-actualizar">
@@ -72,7 +72,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <h2>Total a Pagar: €<?= number_format($total, 2) ?></h2>
         <a href="../public/checkout.php?id=<?=$id_pedido?>" class="btn">Finalizar pedido</a>
     </div>
-    <?=$mensaje?>
     <?php else:?>
         <h1>Tu carrito esta vacio</h1>
     <?php endif;?>

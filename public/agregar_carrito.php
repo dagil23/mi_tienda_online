@@ -17,12 +17,25 @@ if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
         $precio_total = $_POST["cantidad"] * $producto["precio"];
         $talla = $_POST["talla"];
         if($id_pedido){ // Si existe el pedido en estado carrito, agregamos una nueva linea de pedido relacionada con el pedido del usuario 
+            
+            $existOrderLine = checkOrderLine($id_pedido,$id_producto,$talla);
+            if($existOrderLine){//Si existe un producto el mismo producto en la linea de pedidos lo actulizamos la misma linea de pedido con la nueva cantidad
+                $cantidad_actualizada = $existOrderLine["cantidad"] + $_POST["cantidad"];
+                updateOrderLine($existOrderLine["id_linea_pedido"], $cantidad_actualizada);
+                header("Location: ../public/carrito.php");
+            }else{
 
-            addOrderLine($id_pedido,$id_producto,$talla,$producto["precio"],$_POST["cantidad"]); // Creamos una nueva linea de pedido, relacionada con el mismo pedido que ya tenia el usuario 
+                addOrderLine($id_pedido,$id_producto,$talla,$producto["precio"],$_POST["cantidad"]); // Creamos una nueva linea de pedido, relacionada con el mismo pedido que ya tenia el usuario 
+                header("Location: ../public/carrito.php");
+
+            }
+            
         }else {
             //Si no existe el pedido creamos uno nuevo en estado carrito
             $id_pedido_nuevo = addOrder($user["id_usuario"],$user["dni"],$precio_total,$user["nombre"],$user["apellido"],"carrito",$user["direccion"]);
             addOrderLine($id_pedido_nuevo,$id_producto,$talla,$producto["precio"],$_POST["cantidad"]);
+            header("Location: ../public/carrito.php");
+
         }
     }
 }else{
@@ -56,7 +69,7 @@ if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
     <div class="precio">
         <p>Precio €<?=$producto["precio"]?></p>
         <label for="cantidad">Cantidad</label>
-        <input type="number" step="1" name="cantidad" max = "<?=$producto["cantidad_stock"]?>">
+        <input type="number" step="1" name="cantidad" max = "<?=$producto["cantidad_stock"]?>" required>
         <button type="submit">Agregar</button>
     </div>
 </form>
