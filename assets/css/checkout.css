@@ -1,11 +1,136 @@
-body{
-}
-form{
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+@import url(../css/colors-and-fonts.css);
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--primaryColor);
+    color: #333;
+    margin: 0;
 }
 
-input{
-    width: 200px;
+form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+form h5 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+form button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form button:hover {
+    background-color: #218838;
+}
+
+/* Contenedor del pedido */
+.pedido-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.pedido-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Carrusel de productos */
+.productos-carrusel {
+    display: flex;
+    overflow-x: auto;
+    gap: 15px;
+    padding: 10px 0;
+}
+
+.productos-carrusel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.productos-carrusel::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.producto-card-carrusel {
+    flex: 0 0 200px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.producto-card-carrusel:hover {
+    transform: scale(1.05);
+}
+
+.producto-card-carrusel img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.producto-info {
+    text-align: center;
+    padding: 10px;
+}
+
+.producto-info h3 {
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.producto-info p {
+    margin: 3px 0;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.total-pedido {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.total-pedido h3 {
+    font-size: 1.5rem;
+    color: #333;
 }

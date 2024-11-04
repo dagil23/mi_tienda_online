@@ -1,7 +1,4 @@
 <?php 
-
-session_start();
-include '../includes/funciones.php';
 include '../includes/header.php';
 $id_producto = isset($_GET["id"]) ? $_GET["id"] : null;
 $errores = array();

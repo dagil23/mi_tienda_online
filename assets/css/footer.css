@@ -1,13 +1,26 @@
+@import url(../css/colors-and-fonts.css);
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background-color: var(--primaryColor);
+}
+
+main {
+    flex: 1;
+}
+
 footer {
     background-color: var(--nav-bar-color);
     color: #fff;
     padding: 10px 20px;
     font-family: Arial, sans-serif;
-    height: auto; 
-    position: relative;
-    bottom: 0px;
     width: 100%;
     box-sizing: border-box;
+    position: relative;
+    bottom: 0;
 }
 
 .footer-container {

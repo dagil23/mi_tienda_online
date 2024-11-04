@@ -2,7 +2,7 @@ DROP DATABASE IF EXISTS mitiendaDB;
 CREATE DATABASE IF NOT EXISTS mitiendaDB;
 USE mitiendaDB;
 
- CREATE TABLE IF NOT EXISTS USUARIOS(
+CREATE TABLE IF NOT EXISTS USUARIOS(
     id_usuario INTEGER AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
@@ -110,24 +110,39 @@ INSERT INTO CATEGORIA (nombre, descripcion, imagen) VALUES
 
 
 INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_producto, cantidad_stock) VALUES
-(1, 30.00, 'Beige', 'camiseta-beige.png', 'Camiseta de algodón', 'Camiseta Básica Beige', 50),
-(1, 30.00, 'Negro', 'camiseta-negra.png', 'Camiseta de algodón', 'Camiseta Básica Negra', 30),
-(3, 34.00, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 40),
-(3, 34.99, 'Beige', 'polo-beige-back.png', 'Polo de algodón beige (vista trasera)', 'Polo Beige Vista Trasera', 40),
-(3, 34.99, 'Negro', 'polo-black.png', 'Polo de algodón negro', 'Polo Negro', 35),
-(3, 34.99, 'Marrón', 'polo-browndark.png', 'Polo marrón oscuro', 'Polo Marrón Oscuro', 25),
+(1, 24.99, 'Azul', 'Camiseta-Azul.jpg', 'Camiseta básica de algodón', 'Camiseta Azul', 50),
+(1, 29.99, 'Azul', 'Camiseta-Azul-Manga-larga.png', 'Camiseta de manga larga', 'Camiseta Azul Manga Larga', 40),
+(1, 24.99, 'Beige', 'camiseta-beige.png', 'Camiseta básica de algodón', 'Camiseta Beige', 30),
+(1, 29.99, 'Beige', 'camiseta-beige-manga-larga.png', 'Camiseta de manga larga', 'Camiseta Beige Manga Larga', 35),
+(1, 24.99, 'Negro', 'camiseta-negra.png', 'Camiseta básica de algodón', 'Camiseta Negra', 30),
+(2, 39.99, 'Negro', 'pantalon-negro.png', 'Pantalón negro de vestir', 'Pantalón Negro', 30),
+(2, 39.99, 'Gris', 'pantalon-gris.png', 'Pantalón gris casual', 'Pantalón Gris', 25),
+(3, 49.99, 'Azul', 'chaqueta-azul.png', 'Sudadera azul', 'Sudadera Azul', 25),
+(3, 49.99, 'Marrón', 'chaqueta-marron.png', 'Sudadera marrón', 'Sudadera Marrón', 20),
+(3, 49.99, 'Negro', 'chaqueta-negra.png', 'Sudadera negra', 'Sudadera Negra', 18),
 (4, 24.99, 'Beige', 'short-beige-2.png', 'Short clásico beige', 'Short Beige Modelo 2', 20),
-(4, 24.99, 'Beige', 'short-beige.png', 'Short clásico beige', 'Short Beige', 30),
-(4, 24.99, 'Negro', 'short-black-2.png', 'Short clásico negro', 'Short Negro Modelo 2', 15),
-(4, 24.99, 'Negro', 'short-black.png', 'Short clásico negro', 'Short Negro', 25),
-(1, 29.99, 'Negro', 't-shirt-black.png', 'Camiseta básica negra', 'Camiseta Negra', 40),
-(1, 29.99, 'Blanco', 'camiseta-blanca.png', 'Camiseta de algodón', 'Camiseta Básica Blanca', 50),
-(2, 39.99, 'Azul', 'pantalon-azul.png', 'Pantalón vaquero azul', 'Pantalón Azul', 30),
-(3, 25.99, 'Negro', 'sudadera-negra.png', 'Sudadera de algodón', 'Sudadera Negra', 40),
-(4, 19.99, 'Marrón', 'short-marron.png', 'Short casual de algodón', 'Short Marrón', 25),
-(5, 15.99, 'Negro', 'gorra-negra.png', 'Gorra clásica negra', 'Gorra Negra', 60),
-(6, 49.99, 'Verde', 'chaqueta-verde.png', 'Chaqueta casual', 'Chaqueta Verde', 20),
-(7, 29.99, 'Blanco', 'polo-blanco.png', 'Polo blanco de algodón', 'Polo Blanco', 35);
+(4, 24.99, 'Beige', 'short-beige.png', 'Short clásico beige', 'Short Beige', 25),
+(5, 19.99, 'Azul', 'gorra-azul.png', 'Gorra deportiva azul', 'Gorra Azul', 50),
+(5, 19.99, 'Negro', 'gorra-negra.png', 'Gorra deportiva negra', 'Gorra Negra', 40),
+(6, 49.99, 'Azul', 'chaqueta-azul.png', 'Chaqueta acolchada azul', 'Chaqueta Azul', 25),
+(6, 49.99, 'Marrón', 'chaqueta-marron.png', 'Chaqueta acolchada marrón', 'Chaqueta Marrón', 20),
+(6, 49.99, 'Negro', 'chaqueta-negra.png', 'Chaqueta acolchada negra', 'Chaqueta Negra', 18),
+(7, 34.99, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 35),
+(7, 34.99, 'Negro', 'polo-black.png', 'Polo de algodón negro', 'Polo Negro', 40),
+(7, 34.99, 'Marrón', 'polo-browndark.png', 'Polo marrón oscuro', 'Polo Marrón Oscuro', 25),
+(7, 34.99, 'Verde', 'polo-verde.png', 'Polo de algodón verde', 'Polo Verde', 30),
+(8, 14.99, 'Gris', 'gloves-grey.png', 'Guantes de lana grises', 'Guantes Grises', 30),
+(8, 14.99, 'Negro', 'gloves-black.png', 'Guantes de lana negros', 'Guantes Negros', 25),
+(8, 14.99, 'Marrón', 'gloves-brown.png', 'Guantes de lana marrones', 'Guantes Marrones', 20),
+(9, 59.99, 'Blanco', 'zapatillas-blancas.png', 'Zapatillas deportivas blancas', 'Zapatillas Blancas', 20),
+(9, 59.99, 'Negro', 'zapatillas-negras.png', 'Zapatillas deportivas negras', 'Zapatillas Negras', 25),
+(9, 49.99, 'Marrón', 'zapato.png', 'Zapatos de vestir marrones', 'Zapatos Marrones', 15),
+(1, 19.99, 'Negro', 't-shirt-black.png', 'Camiseta básica negra', 'Camiseta Negra', 50);
+
+
+
+
+
 
 
 

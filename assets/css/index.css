@@ -1,24 +1,25 @@
 @import url(../css/colors-and-fonts.css);
 
-body{
-
+body {
     background-color: var(--primaryColor);
-    flex: 5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-h1{
-    font-family: var(--titlesLetters);
+
+img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
 }
-img{
-    width: 400px;
-    height: 400px;
-}
-footer{
-    color: var(--primaryColor);
-}
+
+
 .btn {
     display: inline-block;
     padding: 10px 20px;
-    background-color: var(--nav-bar-color); /* Usando el color específico del carrito */
+    background-color: var(--nav-bar-color);
     color: white;
     text-align: center;
     text-decoration: none;
@@ -26,10 +27,184 @@ footer{
     border: none;
     cursor: pointer;
     font-weight: bold;
-} 
+    margin-top: 10px;
+}
 
 .btn:hover {
-    background-color: var(--cart-button-color); /* Usando el color secundario al hacer hover */
+    background-color: var(--cart-button-color);
     color: white;
-    opacity: 0.9;
+}
+
+
+.formulario-busqueda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--nav-bar-color);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    box-sizing: border-box;
+    color: #fff;
+    gap: 15px; 
+}
+
+.formulario-busqueda input[type="text"],
+.formulario-busqueda input[type="number"],
+.formulario-busqueda select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-right: 0;
+    max-width: 180px;
+    min-width: 120px;
+    box-sizing: border-box;
+    background-color: #fff;
+    color: #333;
+    outline: none;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.formulario-busqueda input[type="text"]:focus,
+.formulario-busqueda input[type="number"]:focus,
+.formulario-busqueda select:focus {
+    box-shadow: 0 0 5px 2px rgba(0, 180, 255, 0.5);
+}
+
+.formulario-busqueda button[type="submit"] {
+    padding: 12px 25px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.formulario-busqueda button[type="submit"]:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+.formulario-busqueda label {
+    font-weight: bold;
+    color: #fff;
+    margin-right: 10px;
+}
+
+.formulario-busqueda .form-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.galeria {
+    margin: 40px auto;
+    max-width: 1200px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.galeria h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--nav-bar-color);
+}
+
+.galeria-imagenes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.galeria-item {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    padding: 15px;
+    text-align: center;
+}
+
+.galeria-item:hover {
+    transform: scale(1.05);
+}
+
+.galeria-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.galeria-item p {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: var(--nav-bar-color);
+    margin-bottom: 10px;
+}
+
+/* Productos encontrados */
+.productos-encontrados {
+    margin: 40px auto;
+    max-width: 1200px;
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.productos-encontrados-lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.producto {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+    padding: 15px;
+    text-align: center;
+}
+
+.producto:hover {
+    transform: scale(1.05);
+}
+
+.producto img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.producto h2 {
+    font-size: 1.5rem;
+    color: var(--nav-bar-color);
+    margin-bottom: 10px;
+}
+
+.producto p {
+    font-size: 1rem;
+    color: #777;
+    margin: 10px 0;
+}
+
+.producto .btn {
+    margin-top: 10px;
 }

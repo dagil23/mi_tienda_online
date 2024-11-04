@@ -23,6 +23,8 @@ if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
             <ul class="admin-nav">
                 <li><a href="../admin/productos.php">Productos</a></li>
                 <li><a href="../admin/categorias.php">Categorías</a></li>
+                <li><a href="../public/logout.php">Logout</a></li>
+
             </ul>
         </nav>
     </header>

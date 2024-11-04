@@ -1,12 +1,13 @@
 <?php
 include '../config/database.php';
-include '../includes/funciones.php';
 include '../includes/header.php';
-session_start();
+
 $productos = null;
 $categorias = getCategorias();
 $colores = getColors();
-if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["color"]) || isset($_GET["precio_min"]) || isset($_GET["precio_max"])) {
+$productosDestacados = getProducts(); // Obtener los productos destacados de la base de datos
+
+if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"]) || isset($_GET["color"]) || isset($_GET["precio_min"]) || isset($_GET["precio_max"])) {
     $terminoBusqueda = !empty($_GET["busqueda"]) ? $_GET["busqueda"] : null;
     $tipo_prenda = !empty($_GET["tipo_prenda"]) ? $_GET["tipo_prenda"] : null;
     $precio = !empty($_GET["precio"]) ? $_GET["precio"] : null;
@@ -16,11 +17,6 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
 
     $productos = searchProduct($terminoBusqueda, $tipo_prenda, $color, $precio_min, $precio_max);
 
-    if ($productos) {
-        echo "Productos encontrados: " . $productos->num_rows; // Esto permite saber si se encontró algún producto
-    } else {
-        echo "Error al realizar la búsqueda o no se encontraron productos.";
-    }
 }
 ?>
 
@@ -35,8 +31,7 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
 </head>
 
 <body>
-        <h1>index</h1>
-    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get">
+    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="get" class="formulario-busqueda">
         <input type="text" placeholder="Buscar..." name="busqueda" value="<?= isset($_GET['busqueda']) ? htmlspecialchars($_GET['busqueda']) : '' ?>">
         <label for="tipo_prenda">Tipo de Prenda: </label>
         <select name="tipo_prenda" id="tipo_prenda">
@@ -54,30 +49,47 @@ if (isset($_GET["busqueda"]) || isset($_GET["tipo_prenda"])  || isset($_GET["col
             <?php endforeach; ?>
         </select>
 
-        <label for="precio">Precio minimo</label>
+        <label for="precio">Precio mínimo</label>
         <input type="number" step="0.1" name="precio_min" id="precio_min" placeholder="Precio" value="<?= isset($_GET['precio_min']) ? htmlspecialchars($_GET['precio_min']) : '' ?>">
-        <label for="precio">Precio maximo</label>
+        <label for="precio">Precio máximo</label>
         <input type="number" step="0.1" name="precio_max" id="precio_max" placeholder="Precio" value="<?= isset($_GET['precio_max']) ? htmlspecialchars($_GET['precio_max']) : '' ?>">
 
-        <button type="submit">Buscar</button>
+        <button type="submit" class="btn">Buscar</button>
     </form>
     <main>
         <section>
             <?php if ($productos && $productos->num_rows > 0): ?>
-                <?php while ($producto = $productos->fetch_assoc()): ?>
-                    <div class='producto'>
-                        <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
-                        <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
-                        <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
-                        <a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>" class="btn">Add to Cart</a>
-                        <a href="../public/agregar_carrito.php"  class="btn">Add to Wishlist</a>
+                <section class="productos-encontrados">
+                    <div class="productos-encontrados-lista">
+                        <?php while ($producto = $productos->fetch_assoc()): ?>
+                            <div class='producto'>
+                                <img src='../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>' alt='<?= htmlspecialchars($producto["nombre_producto"]) ?>'>
+                                <h2><?= htmlspecialchars($producto["nombre_producto"]) ?></h2>
+                                <p>Precio: <?= htmlspecialchars($producto["precio"]) ?></p>
+                                <a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>" class="btn">Add to Cart</a>
+                            </div>
+                        <?php endwhile; ?>
                     </div>
-                <?php endwhile; ?>
+                </section>
             <?php elseif (isset($_GET["busqueda"])): ?>
                 <p>No se encontraron productos con el término de búsqueda</p>
             <?php else: ?>
-                <p>Bienvenido a Clarity</p>
                 <h2>Productos destacados</h2>
+                <section class="galeria">
+                    <div class="galeria-imagenes">
+                        <?php if ($productosDestacados && count($productosDestacados) > 0): ?>
+                            <?php foreach ($productosDestacados as $producto): ?>
+                                <div class="galeria-item">
+                                    <img src="../assets/images/<?= htmlspecialchars($producto["imagen"]) ?>" alt="<?= htmlspecialchars($producto["nombre_producto"]) ?>">
+                                    <p><?= htmlspecialchars($producto["nombre_producto"]) ?></p>
+                                <a href="../public/agregar_carrito.php?id=<?=htmlspecialchars($producto["id_producto"])?>" class="btn">Add to Cart</a>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No hay productos destacados disponibles en este momento.</p>
+                        <?php endif; ?>
+                    </div>
+                </section>
             <?php endif; ?>
         </section>
     </main>

@@ -11,7 +11,7 @@ $mensaje = "";
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         if(isset($_POST["confirmacion"]) && $_POST["confirmacion"] == $confirmar){    
-           $mensaje = deleteProduct($id_producto) ? "Producto eliminado" : "Error al eliminar el producto";
+        $mensaje = deleteProduct($id_producto) ? "Producto eliminado" : "Error al eliminar el producto";
         }
     }
 

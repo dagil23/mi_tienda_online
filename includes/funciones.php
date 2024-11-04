@@ -53,6 +53,39 @@ function verifyImage($archivo, $tiposPermitidos = ["image/png", "image/jpeg"])
     }
     return false;
 }
+function verifyCardNumber($cardNumber) {
+    $regex = "/^[0-9]{16}$/"; 
+    $isValid = preg_match($regex, $cardNumber) ? true : false;
+    return $isValid;
+}
+function verifyExpirationDate($expDate) {
+    $regex = "/^(0[1-9]|1[0-2])\/([0-9]{2})$/"; 
+    $isValid = preg_match($regex, $expDate) ? true : false;
+    
+    if ($isValid) {
+        
+        $currentYear = (int)date("y");
+        $currentMonth = (int)date("m");
+        list($month, $year) = explode('/', $expDate);
+        $month = (int)$month;
+        $year = (int)$year;
+
+        if ($year > $currentYear || ($year === $currentYear && $month >= $currentMonth)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    return false;
+}
+function verifyCVV($cvv) {
+    $regex = "/^[0-9]{3,4}$/"; 
+    $isValid = preg_match($regex, $cvv) ? true : false;
+    return $isValid;
+}
+
+
 function addUser($usuario, $apellido, $email, $dni, $pwd, $direccion, $telefono)
 {
     $conexion = connectDB();
@@ -131,6 +164,33 @@ function searchProduct($terminoBusqueda = null, $tipoPrenda = null, $color = nul
 
     $conexion->close();
     $stmt->close();
+}
+function getProducts() {
+    
+    $conexion = connectDB();
+    $query = "SELECT * FROM PRODUCTO";
+    $stmt = $conexion->prepare($query);
+    if (!$stmt) {
+        die("Error al preparar la consulta: " . $conexion->error);
+    }
+    
+    if (!$stmt->execute()) {
+        die("Error al ejecutar la consulta: " . $stmt->error);
+    }
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $productos = [];
+        while ($row = $result->fetch_assoc()) {
+            $productos[] = $row;
+        }
+        return $productos; 
+    } else {
+        return [];
+    }
+
+    $stmt->close();
+    $conexion->close();
 }
 
 function getInfoUser($email = null)
@@ -639,7 +699,7 @@ function getUserOrders($id_pedido){
 
     $conexion = connectDB();
 
-    $query = "SELECT talla, precio_unitario, cantidad,imagen,producto.id_producto
+    $query = "SELECT producto.nombre_producto,talla, precio_unitario, cantidad,imagen,producto.id_producto
 	FROM LINEA_PEDIDO INNER JOIN pedidos
     ON linea_pedido.id_pedido = pedidos.id_pedido 
     INNER JOIN producto ON linea_pedido.id_producto = producto.id_producto
@@ -657,6 +717,7 @@ function getUserOrders($id_pedido){
     if($result->num_rows > 0){
         while($row = $result->fetch_assoc()){
             $orders [] = [
+                "nombre_producto" => $row["nombre_producto"],
                 "talla" => $row["talla"],
                 "precio_unitario" => $row["precio_unitario"],
                 "cantidad" => $row["cantidad"],
@@ -714,4 +775,18 @@ function checkOrderLine($id_pedido, $id_producto,$talla){
     }else{
         return null;
     }
+
+}
+
+function getOrderStatus($id_pedido) {
+    $conexion = connectDB();
+    $query = "SELECT estado FROM PEDIDOS WHERE id_pedido = ?";
+    $stmt = $conexion->prepare($query);
+    $stmt->bind_param("i", $id_pedido);
+    $stmt->execute();
+    $stmt->bind_result($estado);
+    $stmt->fetch();
+    $stmt->close();
+    $conexion->close();
+    return $estado;
 }

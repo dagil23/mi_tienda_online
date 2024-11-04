@@ -4,10 +4,8 @@
         <div class="footer-section links">
             <h2>Enlaces Útiles</h2>
             <ul>
-                <li><a href="#">Inicio</a></li>
-                <li><a href="#">Tienda</a></li>
-                <li><a href="#">Wishlist</a></li>
-                <li><a href="#">Mi Cuenta</a></li>
+                <li><a href="../public/index.php">Inicio</a></li>
+                <li><a href="../public/carrito.php">Mi Carrito</a></li>
                 <li><a href="#">Contáctanos</a></li>
             </ul>
         </div>

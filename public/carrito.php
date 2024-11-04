@@ -1,11 +1,10 @@
 <?php
 include '../config/database.php';
-include '../includes/funciones.php';
 include '../includes/header.php';
-session_start();
 $id_pedido = isset($_SESSION["id_pedido"]) ? (int)$_SESSION["id_pedido"] : null;
 $total = floatval(sumOrdersUser($id_pedido));
 $userOrders = getUserOrders($id_pedido); //Obtenemos las ordenes que ha realizado el usuario para luego mostralas
+
 $id_producto = isset($_GET["id_producto"]) ? $_GET["id_producto"] : null;
 $_SESSION["total"] = $total; //Guardamos en la sesion el total del pedido para luego enviarlo
 echo $id_producto;
