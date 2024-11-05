@@ -31,11 +31,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //Tengo que verificar que la imagen que se suba sea el formato MIME correcto pnp,jpg
     if ($_FILES["imagen"]["size"] == 0) {
         $error[] = "Debes de subir una imagen";
+    }elseif(!verifyImage($_FILES["imagen"])){
+        $error[] = "Formato de imagen incorrecto";
     }
+
     foreach ($campos as $campo => $nombreCampo) {
         if (!isset($_POST[$campo]) || empty($_POST[$campo])) {
             $error[] = "El campo $nombreCampo no puede estar vacio";
         }
+    }
+
+    if($_POST["cantidad"] < 0){
+        
+        $error [] = "La cantidad no puede ser menor que 0";
     }
 
     if (empty($error)) {   //Si no encontramos ningun error introducimos el producto

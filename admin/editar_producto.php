@@ -8,6 +8,7 @@ if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
 $id_producto = isset($_GET["id"]) ? $_GET["id"] : null;
 $producto = getProductos($id_producto);
 $categorias = getCategorias();
+$errores = array();
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
         
@@ -30,9 +31,14 @@ $categorias = getCategorias();
         }else{
             $imagen = $producto["imagen"];
         }
+        if(!verifyImage($_FILES["imagen"])){
+            $error [] = "Formato de imagen incorrecto"; 
+        }
+        if(!empty($error)){
 
-        if(updateProducto( $id_producto,$nombre_producto, $precio, $cantidad, $color, $descripcion,$imagen, $categoria)){
-            header("Location: ../admin/productos.php?action=edit");
+            if(updateProducto( $id_producto,$nombre_producto, $precio, $cantidad, $color, $descripcion,$imagen, $categoria)){
+                header("Location: ../admin/productos.php?action=edit");
+            }
         }else{
             echo "Error al actualizar el producto";
         }
@@ -48,10 +54,16 @@ $categorias = getCategorias();
     <title>Document</title>
 </head>
 <body>
-    <h1>Aqui voy a editar los productos con un formulario</h1>
-    <p><?=$id_producto?></p>
-
-    <form action="<?php echo $_SERVER["PHP_SELF"] . "?id=" . $_GET["id"] ?>" method="post" enctype="multipart/form-data">
+<header>
+        <nav class="barra-navegacion">
+            <ul>
+                <li><a href="../admin/index.php">Inicio</a></li>
+                <li><a href="../admin/productos.php">Agregar</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Editar Productos</h1>
+    <form action="<?= $_SERVER["PHP_SELF"] . "?id=" . $_GET["id"] ?>" method="post" enctype="multipart/form-data">
         <label for="nombre"> Nombre</label>
         <input type="text" name="nombre" id="nombre" value="<?=$producto["nombre_producto"]?>">
         <label for="precio">Precio</label>
@@ -73,7 +85,7 @@ $categorias = getCategorias();
             <?php endforeach; ?>
         </select>
         <label for="descripcion">Nueva Descripcion del producto</label>
-        <textarea name="descripcion" id="descripcion" rows="4" cols="50"></textarea>
+        <textarea name="descripcion" id="descripcion" rows="4" cols="50" value="<?= $producto["descripcion"] ?>"></textarea>
         <button type="submit">Guardar Cambios</button>   
     </form>
 </body>

@@ -1,21 +1,15 @@
 <?php
 include '../config/database.php';
 include '../includes/funciones.php';
+session_start();
 if(!isset($_SESSION["email"]) || !isAdmin($_SESSION["email"])){
     header("Location: ../public/index.php");
     exit;
 }
-session_start();
 $action = isset($_GET['action']) ? $_GET['action'] : 'add';
 $categorias = getCategorias();
 $errores = array();
 $mensaje = array();
-if (isset($_SESSION['email'])) {
-    if (!isAdmin($_SESSION['email'])) {
-        header("Location: ../public/index.php");
-    }
-}
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $campos = [

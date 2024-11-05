@@ -5,7 +5,6 @@ $errores = array();
 $users = getInfoUser($_SESSION["email"]);
 $tallas = ["S","M","L","XXL"];
 $producto = getProductos($id_producto);
-echo $_SESSION["email"];
 if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
     $user = getInfoUser($_SESSION["email"]);//Obtenemos toda la informacion de nuestro usuario
     $id_pedido = existsOrderCart($user["id_usuario"]);//Si el usuario tiene un pedido en estado carrito lo obtemos mediante la funcion 
@@ -14,10 +13,12 @@ if(isset($_SESSION["email"])){//Verifico si el usuario tiene una cuenta
         $precio_total = $_POST["cantidad"] * $producto["precio"];
         $talla = $_POST["talla"];
         if($id_pedido){ // Si existe el pedido en estado carrito, agregamos una nueva linea de pedido relacionada con el pedido del usuario 
-            
             $existOrderLine = checkOrderLine($id_pedido,$id_producto,$talla);
             if($existOrderLine){//Si existe un producto el mismo producto en la linea de pedidos lo actulizamos la misma linea de pedido con la nueva cantidad
                 $cantidad_actualizada = $existOrderLine["cantidad"] + $_POST["cantidad"];
+                if($cantidad_actualizada < 0){
+                    $errores [] = "La cantidad no debe ser negativa"; //Controlar que no puedan introducir cantidades menores a 0
+                }
                 updateOrderLine($existOrderLine["id_linea_pedido"], $cantidad_actualizada);
                 header("Location: ../public/carrito.php");
             }else{
