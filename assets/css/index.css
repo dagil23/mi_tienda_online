@@ -76,7 +76,7 @@ img {
 
 .formulario-busqueda button[type="submit"] {
     padding: 12px 25px;
-    background-color: #28a745;
+    background-color: var(--button-color);
     color: white;
     border: none;
     border-radius: 8px;
@@ -86,7 +86,7 @@ img {
 }
 
 .formulario-busqueda button[type="submit"]:hover {
-    background-color: #218838;
+    background-color: var(--button-color-hover);
     transform: scale(1.05);
 }
 

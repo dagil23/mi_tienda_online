@@ -1,7 +1,10 @@
 :root{
-    --primaryColor: hsl(60, 100%, 75%);
-    --secondaryColor:hsl(60, 56%, 81%);
-    --nav-bar-color: hsl(0, 0%, 13%);
+    --primaryColor: #ffff80;
+    --secondaryColor:#eaeab3;
+    --nav-bar-color: #212121;
     --cart-button-color: hsl(120, 70%, 60%);
     --titlesLetters: "Rozha One", serif;
+    --button-color:#28a745;
+    --button-color-hover:#218838;
+
 }

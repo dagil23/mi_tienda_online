@@ -56,7 +56,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="../admin/index.php">Inicio</a></li>
                 <li><a href="?action=add">Agregar</a></li>
                 <li><a href="?action=edit">Modificar</a></li>
-                <li><a href="?action=delete">Eliminar</a></li>
             </ul>
         </nav>
     </header>
@@ -70,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label for="descripcion">Descripcion del producto</label>
             <textarea name="descripcion" id="descripcion"></textarea>
             <button class="btn" type="submit">Agregar</button>
-        </form>
         <?php if (!empty($errores)): ?>
             <div class="mensaje-error">
                 <ul>
@@ -88,6 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </ul>
             </div>
         <?php endif; ?>
+        </form>
     <?php elseif ($action == 'edit' || $action == 'delete'): ?>
         <table border="1">
             <thead>

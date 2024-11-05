@@ -1,5 +1,4 @@
 <?php
-include '../config/database.php';
 include '../includes/header.php';
 $mensaje = "";
     if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -19,7 +18,8 @@ $mensaje = "";
                 $mensaje = "Formato de email invalido";
             }else{
 
-                $mensaje = addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
+                addUser($usuario,$apellido,$email,$dni,$pwd,$direccion,$telefono);
+                header("Location: ../public/index.php");
             }
     }
     }
@@ -58,7 +58,6 @@ $mensaje = "";
                     <input type="text" name="dni" id="dni" required>
                     <button type="submit">Crear Cuenta</button>
                     <button><a href="../public/login.php">Iniciar Sesion</a></button>
-                    <?php echo $mensaje;?>
                 </form>
             </fieldset>
         </section>

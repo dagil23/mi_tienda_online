@@ -80,12 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <li><a href="../admin/index.php">Inicio</a></li>
                 <li><a href="?action=add">Agregar</a></li>
                 <li><a href="?action=edit">Modificar</a></li>
-                <li><a href="?action=delete">Eliminar</a></li>
             </ul>
         </nav>
     </header>
     <h1>Productos</h1>
-    
     <?php if($action == 'add'): ?>
     <form action="" method="post" enctype="multipart/form-data" class="formulario-producto">
         <label for="nombre_producto">Nombre</label>
@@ -97,13 +95,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <?php endforeach; ?>
         </select>
         <label for="precio">Precio</label>
-        <input type="number" name="precio" step="0.1" class="input-producto">
+        <input type="number" min="1" name="precio" step="0.1" class="input-producto">
         <label for="text">Color</label>
         <input type="text" name="color" class="input-producto">
         <label for="imagen">Imagen</label>
         <input type="file" name="imagen" class="input-producto">
         <label for="cantidad">Cantidad</label>
-        <input type="number" name="cantidad" id="cantidad" class="input-producto">
+        <input type="number" min="1" name="cantidad" id="cantidad" class="input-producto">
         <label for="descripcion">Descripcion del producto</label>
         <textarea name="descripcion" id="descripcion" rows="4" cols="50" class="textarea-producto"></textarea>
         <button type="submit" class="btn-producto">Agregar</button>
@@ -130,7 +128,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
     
     <?php elseif ($action == "edit" || $action == "delete"): ?>
-        <h1>Editar</h1>
         <?php foreach($productos as $producto):?>
         <table border="1" cellpadding="10" class="tabla-producto">
         <tbody>

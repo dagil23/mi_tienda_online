@@ -91,9 +91,7 @@ CREATE TABLE IF NOT EXISTS WISHLIST_PRODUCT(
 INSERT INTO USUARIOS (nombre, apellido, email, dni, contraseña, direccion, telefono, rol) VALUES
 ('Daniel', 'Martínez', 'daniel@example.com','12345678A', 'contraseñaSegura1', 'Calle Falsa 123', '123456789', 'admin'),
 ('Laura', 'González', 'laura@example.com','87654321B', 'contraseñaSegura2', 'Avenida Siempre Viva 456', '987654321', 'user'),
-('Pedro', 'López', 'pedro@example.com', '23456789C','contraseñaSegura3', 'Calle Verde 789', '123456789', 'user'),
-('Ana', 'Sánchez', 'ana@example.com', '34567890D','contraseñaSegura4', 'Calle Azul 321', '321654987', 'user'),
-('Carlos', 'Ramírez', 'carlos@example.com', '45678901E','contraseñaSegura5', 'Avenida del Sol 654', '654321987', 'user');
+
 
 
 INSERT INTO CATEGORIA (nombre, descripcion, imagen) VALUES
@@ -115,8 +113,10 @@ INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_p
 (1, 24.99, 'Beige', 'camiseta-beige.png', 'Camiseta básica de algodón', 'Camiseta Beige', 30),
 (1, 29.99, 'Beige', 'camiseta-beige-manga-larga.png', 'Camiseta de manga larga', 'Camiseta Beige Manga Larga', 35),
 (1, 24.99, 'Negro', 'camiseta-negra.png', 'Camiseta básica de algodón', 'Camiseta Negra', 30),
+(1, 24.99, 'Verde', 'Camiseta-Verde.png', 'Camiseta básica de algodón', 'Camiseta Verde', 40),
 (2, 39.99, 'Negro', 'pantalon-negro.png', 'Pantalón negro de vestir', 'Pantalón Negro', 30),
 (2, 39.99, 'Gris', 'pantalon-gris.png', 'Pantalón gris casual', 'Pantalón Gris', 25),
+(2, 39.99, 'Beige', 'pantalon-beige.png', 'Pantalón beige casual', 'Pantalón Beige', 28),
 (3, 49.99, 'Azul', 'chaqueta-azul.png', 'Sudadera azul', 'Sudadera Azul', 25),
 (3, 49.99, 'Marrón', 'chaqueta-marron.png', 'Sudadera marrón', 'Sudadera Marrón', 20),
 (3, 49.99, 'Negro', 'chaqueta-negra.png', 'Sudadera negra', 'Sudadera Negra', 18),
@@ -127,6 +127,7 @@ INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_p
 (6, 49.99, 'Azul', 'chaqueta-azul.png', 'Chaqueta acolchada azul', 'Chaqueta Azul', 25),
 (6, 49.99, 'Marrón', 'chaqueta-marron.png', 'Chaqueta acolchada marrón', 'Chaqueta Marrón', 20),
 (6, 49.99, 'Negro', 'chaqueta-negra.png', 'Chaqueta acolchada negra', 'Chaqueta Negra', 18),
+(6, 49.99, 'Verde', 'chaqueta-verde.png', 'Chaqueta acolchada verde', 'Chaqueta Verde', 22),
 (7, 34.99, 'Beige', 'polo-beige.png', 'Polo de algodón beige', 'Polo Beige', 35),
 (7, 34.99, 'Negro', 'polo-black.png', 'Polo de algodón negro', 'Polo Negro', 40),
 (7, 34.99, 'Marrón', 'polo-browndark.png', 'Polo marrón oscuro', 'Polo Marrón Oscuro', 25),
@@ -138,6 +139,9 @@ INSERT INTO PRODUCTO (id_categoria, precio, color, imagen, descripcion, nombre_p
 (9, 59.99, 'Negro', 'zapatillas-negras.png', 'Zapatillas deportivas negras', 'Zapatillas Negras', 25),
 (9, 49.99, 'Marrón', 'zapato.png', 'Zapatos de vestir marrones', 'Zapatos Marrones', 15),
 (1, 19.99, 'Negro', 't-shirt-black.png', 'Camiseta básica negra', 'Camiseta Negra', 50);
+
+
+
 
 
 
